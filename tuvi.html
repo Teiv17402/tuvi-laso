@@ -91,8 +91,9 @@ nav a:hover{color:#fff;}
 .sb-btn:hover{background:rgba(255,255,255,.14);}
 .sb-title{font-size:10.5px;font-weight:700;color:#6a7d94;letter-spacing:.5px;margin-bottom:9px;text-transform:uppercase;}
 .chk-item{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
-.chk-item input{accent-color:#f9a825;cursor:pointer;}
-.chk-item label{font-size:12px;color:#c0ccd8;cursor:pointer;line-height:1.3;}
+.chk-item input{accent-color:#f9a825;cursor:pointer;width:15px;height:15px;}
+.chk-item label{font-size:12px;color:#c0ccd8;cursor:pointer;line-height:1.3;transition:color .15s;}
+.chk-item input:checked + label{color:#f9a825;}
 .sb-link{margin-top:12px;font-size:11.5px;line-height:1.8;}
 .sb-link a{color:#f9a825;text-decoration:none;}
 
@@ -140,7 +141,8 @@ nav a:hover{color:#fff;}
 .c-tags{display:flex;flex-direction:column;gap:2px;}
 .c-tag{font-size:10px;color:#1565c0;font-weight:700;}
 .c-clink{font-size:9px;color:#c62828;margin-top:6px;line-height:1.5;text-align:center;}
-.c-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);font-size:90px;color:rgba(0,0,0,.04);pointer-events:none;font-weight:900;white-space:nowrap;}
+.c-wm{display:none;}
+.bagua-svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:190px;height:190px;opacity:.07;pointer-events:none;}
 .than-lbl{display:inline-block;background:#b71c1c;color:#ef9a9a;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-left:3px;vertical-align:middle;font-weight:700;}
 
 /* Display groups */
@@ -160,6 +162,34 @@ body.show-daivan .grp-daivan{display:inline!important;}
 body.show-cungtv .grp-cungtv{display:block!important;}
 .grp-cungdv{display:none;}
 body.show-cungdv .grp-cungdv{display:inline!important;}
+
+/* ══ FORM THEME: DƯƠNG LỊCH = sáng / ÂM LỊCH = tối ══ */
+body.cal-dl .form-wrap{background:linear-gradient(160deg,rgba(255,248,230,.18),rgba(200,220,255,.12));}
+body.cal-dl .form-card{
+  background:rgba(252,248,238,.97);
+  border:1px solid rgba(180,150,80,.25);
+  box-shadow:0 8px 40px rgba(180,120,0,.18);
+}
+body.cal-dl .form-card h2{color:#2a1a00;}
+body.cal-dl .fg-label{color:#6a5030;}
+body.cal-dl .f-input{
+  background:rgba(255,255,255,.7);
+  border-color:rgba(160,120,50,.25);
+  color:#1a1000;
+}
+body.cal-dl .f-input:focus{border-color:#f9a825;}
+body.cal-dl .f-input::placeholder{color:#a89060;}
+body.cal-dl .g-btn{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.12);color:#333;}
+body.cal-dl .g-btn.active{background:rgba(10,80,40,.18);border-color:#2ecc71;color:#1a2e1a;}
+body.cal-dl .sec-label{color:#7a5a2a;}
+body.cal-dl .cal-row{background:rgba(0,0,0,.06);}
+body.cal-dl .cal-btn{color:#5a4010;}
+body.cal-dl .cal-btn.active{background:rgba(249,168,37,.25);color:#3a2000;border-radius:8px;}
+body.cal-dl .cp-disp{background:rgba(255,255,255,.7);border-color:rgba(160,120,50,.25);color:#1a1000;}
+body.cal-dl .cp-disp .arrow{color:#9a7030;}
+body.cal-dl .cp-disp:hover,body.cal-dl .cp-disp.open{border-color:#f9a825;}
+body.cal-dl .chk-row label{color:#3a2a10;}
+body.cal-dl .al-namDL-note{color:#4a7a30;}
 
 /* ══ ÂM LỊCH SECTION ══ */
 .al-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -199,7 +229,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
 .ls-btn.del:hover{background:rgba(255,60,60,.12);}
 </style>
 </head>
-<body>
+<body class="cal-dl">
 <div id="stars-bg"></div>
 
 <!-- ══════════════════════════════════════
@@ -601,7 +631,80 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
 
         <!-- CENTER PANEL -->
         <div class="house house-center">
-          <div class="c-wm">⊕</div>
+          <!-- Bát Quái watermark -->
+          <svg class="bagua-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="#1a1a2e">
+            <!-- Outer ring -->
+            <circle cx="100" cy="100" r="94" fill="none" stroke="#1a1a2e" stroke-width="2"/>
+            <circle cx="100" cy="100" r="72" fill="none" stroke="#1a1a2e" stroke-width="1"/>
+            <circle cx="100" cy="100" r="32" fill="none" stroke="#1a1a2e" stroke-width="1"/>
+            <!-- Yin-Yang inner -->
+            <path d="M100 68a16 16 0 0 1 0 32 16 16 0 0 0 0 32 32 32 0 0 0 0-64z"/>
+            <path d="M100 68a32 32 0 0 1 0 64 16 16 0 0 1 0-32 16 16 0 0 0 0-32z" fill="none" stroke="#1a1a2e" stroke-width="1"/>
+            <circle cx="100" cy="84" r="6"/>
+            <circle cx="100" cy="116" r="6" fill="none" stroke="#1a1a2e" stroke-width="1.5"/>
+            <!-- 8 Trigrams arranged in circle (r=83) -->
+            <!-- ☰ Kiền - N (top) -->
+            <g transform="translate(100,10) rotate(0)">
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-10" y1="5" x2="10" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-10" y1="10" x2="10" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☱ Đoài - NE -->
+            <g transform="translate(158,28)">
+              <line x1="-9" y1="0" x2="9" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="5" x2="9" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="10" x2="-2" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="10" x2="9" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☲ Ly - E (right) -->
+            <g transform="translate(184,96)">
+              <line x1="-9" y1="0" x2="9" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="5" x2="-2" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="5" x2="9" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="10" x2="9" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☳ Chấn - SE -->
+            <g transform="translate(158,164)">
+              <line x1="-9" y1="0" x2="-2" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="0" x2="9" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="5" x2="-2" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="5" x2="9" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="10" x2="9" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☴ Tốn - S (bottom) -->
+            <g transform="translate(100,182)">
+              <line x1="-10" y1="0" x2="10" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-10" y1="5" x2="10" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-10" y1="10" x2="-3" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="3" y1="10" x2="10" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☵ Khảm - SW -->
+            <g transform="translate(42,164)">
+              <line x1="-9" y1="0" x2="-2" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="0" x2="9" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="5" x2="9" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="10" x2="-2" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="10" x2="9" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☶ Cấn - W (left) -->
+            <g transform="translate(16,96)">
+              <line x1="-9" y1="0" x2="-2" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="0" x2="9" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="5" x2="-2" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="5" x2="9" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="10" x2="-2" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="10" x2="9" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+            <!-- ☷ Khôn - NW -->
+            <g transform="translate(42,28)">
+              <line x1="-9" y1="0" x2="-2" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="0" x2="9" y2="0" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="5" x2="-2" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="5" x2="9" y2="5" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="-9" y1="10" x2="-2" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+              <line x1="2" y1="10" x2="9" y2="10" stroke="#1a1a2e" stroke-width="2.5"/>
+            </g>
+          </svg>
           <div class="c-logo">
             <div class="ct">TỬ VI TRƯỜNG NGUYỄN</div>
             <div class="cs">Hệ thống cai mệnh đài bản</div>
@@ -1166,6 +1269,9 @@ function setCal(c) {
   document.getElementById('cal-al').className = 'cal-btn' + (c==='al'?' active':'');
   document.getElementById('dl-section').style.display = (c==='dl') ? '' : 'none';
   document.getElementById('al-section').style.display = (c==='al') ? '' : 'none';
+  // Form theme: DL = sáng, AL = tối
+  document.body.classList.toggle('cal-dl', c==='dl');
+  document.body.classList.toggle('cal-al', c==='al');
   closeAllPickers();
 }
 
