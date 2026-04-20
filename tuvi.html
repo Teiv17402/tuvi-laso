@@ -8,7 +8,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;min-height:100vh;overflow-x:hidden;}
 
-/* ── Stars ── */
+/* ── Stars bg ── */
 #stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) var(--delay,0s) infinite;}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:var(--op,.9)}}
@@ -17,18 +17,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;mi
 
 /* ── Header ── */
 header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:10px 28px;background:rgba(4,8,24,.85);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
 .logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#4fc3f7 0%,#f9a825 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
-.logo-text{font-weight:700;font-size:15px;color:#fff;letter-spacing:.5px;}
+.logo-text{font-weight:700;font-size:15px;color:#fff;letter-spacing:.5px;transition:color .2s;}
+.logo:hover .logo-text{color:#f9a825;}
 nav{display:flex;gap:22px;align-items:center;}
 nav a{color:#f9a825;text-decoration:none;font-size:13.5px;display:flex;align-items:center;gap:5px;transition:color .2s;}
 nav a:hover{color:#fff;}
-nav a .ico{font-size:13px;}
-.hdr-btn{padding:8px 18px;border-radius:7px;font-size:13px;cursor:pointer;border:none;transition:all .2s;}
-.hdr-register{background:#151e3a;color:#ccc;border:1px solid #2a3550;}
-.hdr-register:hover{background:#1e2b4a;}
-.hdr-login{background:#f9a825;color:#000;font-weight:700;}
-.hdr-login:hover{background:#fbb900;}
 
 /* ── Pages ── */
 .page{display:none;}
@@ -38,45 +33,30 @@ nav a .ico{font-size:13px;}
 .form-wrap{position:relative;z-index:5;display:flex;justify-content:center;align-items:center;min-height:calc(100vh - 60px);padding:28px 16px;}
 .form-card{background:rgba(10,16,42,.94);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:34px 38px;width:472px;max-width:100%;backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.5);}
 .form-card h2{text-align:center;font-size:21px;font-weight:700;margin-bottom:26px;color:#fff;}
-
 .fg{margin-bottom:16px;}
 .fg-label{font-size:11px;color:#7a8fa8;margin-bottom:5px;display:block;letter-spacing:.3px;}
-
 .f-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;outline:none;transition:border-color .2s;}
 .f-input:focus{border-color:#f9a825;}
 .f-input::placeholder{color:#3d4e62;}
-
-/* gender */
 .gender-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .g-btn{padding:11px 0;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#aaa;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;}
 .g-btn.active{background:rgba(10,80,40,.55);border-color:#2ecc71;color:#fff;}
-
-/* calendar */
 .sec-label{font-size:11px;font-weight:700;color:#7a8fa8;letter-spacing:.8px;margin-bottom:8px;}
 .cal-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:rgba(255,255,255,.05);border-radius:10px;padding:4px;}
 .cal-btn{padding:10px;border-radius:8px;border:none;background:transparent;color:#999;cursor:pointer;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;}
 .cal-btn.active{background:rgba(255,255,255,.16);color:#fff;}
-
-/* date / time selects */
 .date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
 .time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .sel-grp{position:relative;}
 .sel-grp .fg-label{margin-bottom:4px;}
 select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23667'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-
-/* checkbox */
 .chk-row{display:flex;align-items:center;gap:10px;margin:18px 0;}
 .chk-row input[type=checkbox]{width:17px;height:17px;accent-color:#f9a825;cursor:pointer;}
 .chk-row label{font-size:13px;color:#ccc;cursor:pointer;}
-
-/* submit */
 .btn-submit{width:100%;padding:14px;background:linear-gradient(90deg,#f9a825,#e65c00);border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:opacity .2s;position:relative;overflow:hidden;}
 .btn-submit:hover{opacity:.9;}
 .btn-submit::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,rgba(255,255,255,.15),transparent 60%);transform:translateX(-100%);animation:shimmer 2.5s infinite;}
 @keyframes shimmer{100%{transform:translateX(200%)}}
-
-.form-footer{text-align:center;margin-top:14px;font-size:12.5px;color:#667a90;}
-.form-footer a{color:#f9a825;text-decoration:none;}
 
 /* ════════ RESULT PAGE ════════ */
 .result-wrap{position:relative;z-index:5;display:flex;gap:14px;padding:14px;min-height:calc(100vh - 60px);}
@@ -93,9 +73,8 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .sb-link{margin-top:12px;font-size:11.5px;line-height:1.8;}
 .sb-link a{color:#f9a825;text-decoration:none;}
 .sb-link a:hover{text-decoration:underline;}
-.sb-expand{float:right;background:none;border:none;color:#667;cursor:pointer;font-size:16px;margin-top:-2px;}
 
-/* board wrapper */
+/* board */
 .board-outer{flex:1;display:flex;justify-content:center;align-items:flex-start;}
 .board{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,minmax(150px,auto));gap:2px;background:#101828;border:2px solid #1c2840;border-radius:4px;width:100%;max-width:900px;}
 
@@ -110,11 +89,13 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .tvan-menh{background:#0d2060;color:#7ab0ff;}
 .tvan-tuan{background:#7a4d00;color:#ffd580;}
 
-/* main star */
-.mstar{font-size:12.5px;font-weight:700;margin:4px 0 3px;line-height:1.3;}
+/* colors */
 .c-red{color:#ff6b6b;} .c-orange{color:#ffaa44;} .c-green{color:#4cba50;}
 .c-blue{color:#64b5f6;} .c-purple{color:#d090e0;} .c-yellow{color:#fff176;}
 .c-gray{color:#8aabb8;} .c-white{color:#ddeeff;} .c-teal{color:#4dd0c4;}
+
+/* main star */
+.mstar{font-size:12.5px;font-weight:700;margin:4px 0 3px;line-height:1.3;}
 
 /* sub stars */
 .sstars{display:flex;flex-direction:column;gap:1px;margin-top:2px;}
@@ -123,7 +104,7 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .ss.c-blue{color:#90caf9;} .ss.c-gray{color:#78909c;} .ss.c-white{color:#cfd8dc;}
 .ss.c-yellow{color:#fff59d;} .ss.c-purple{color:#ce93d8;} .ss.c-teal{color:#80cbc4;}
 
-/* position / month footer */
+/* position footer */
 .h-foot{position:absolute;bottom:4px;right:5px;font-size:8.5px;color:#3d5060;text-align:right;line-height:1.4;}
 
 /* center panel */
@@ -139,52 +120,77 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .c-clink{font-size:9px;color:#c62828;margin-top:8px;line-height:1.5;text-align:center;}
 .c-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);font-size:90px;color:rgba(0,0,0,.04);pointer-events:none;font-weight:900;white-space:nowrap;}
 
-/* special badges */
-.menh-lbl{display:inline-block;background:#1565c0;color:#90caf9;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-left:3px;vertical-align:middle;font-weight:700;}
+/* badges */
 .than-lbl{display:inline-block;background:#b71c1c;color:#ef9a9a;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-left:3px;vertical-align:middle;font-weight:700;}
 
-/* hidden star groups */
-.g-phutinh .ss-phu{display:flex;}
-.g-phutinh .ss-phu{flex-direction:column;}
-.ss-phu-item{font-size:9.5px;line-height:1.3;}
+/* ═══ DISPLAY GROUPS ═══
+   Groups controlled by sidebar checkboxes.
+   Use body class approach: body.show-X → show; body.hide-X → hide
+*/
 
-/* util */
-.hidden{display:none!important;}
+/* cb1: Thiên Hình – shown when cb1 checked (default: checked → visible) */
+.grp-thienhinh { display: inline; }
+body.hide-thienhinh .grp-thienhinh { display: none !important; }
+
+/* cb2: Các phụ tinh – shown when cb2 checked (default: checked → visible) */
+.sstars { display: flex; }
+body.hide-phutinh .sstars { display: none !important; }
+
+/* cb3: Lưu Lộc/Kinh/Đà tiểu vận – shown when cb3 checked (default: checked) */
+.grp-luuloc { display: inline; }
+body.hide-luuloc .grp-luuloc { display: none !important; }
+
+/* cb4: Lưu tứ hóa tiểu vận – HIDDEN by default (cb4 unchecked) */
+.grp-luuhoa { display: none; }
+body.show-luuhoa .grp-luuhoa { display: inline !important; }
+
+/* cb5: Lưu niên tiểu vận khác – shown when cb5 checked (default: checked) */
+.grp-luunien { display: inline; }
+body.hide-luunien .grp-luunien { display: none !important; }
+
+/* cb6: Lưu đại vận – HIDDEN by default (cb6 unchecked) */
+.grp-daivan { display: none; }
+body.show-daivan .grp-daivan { display: inline !important; }
+
+/* cb7: Cung tiểu vận – HIDDEN by default (cb7 unchecked) */
+.grp-cungtv { display: none; }
+body.show-cungtv .grp-cungtv { display: block !important; }
+
+/* cb8: Cung đại vận – HIDDEN by default (cb8 unchecked) */
+.grp-cungdv { display: none; }
+body.show-cungdv .grp-cungdv { display: block !important; }
+
+/* Đại vận indicator style */
+.dv-bar{background:#1a3a5c;border-top:1px solid #2a5a8c;padding:3px 6px;font-size:9px;color:#90caf9;margin-top:4px;border-radius:0 0 3px 3px;}
+.tv-bar{background:#1a3a1a;border-top:1px solid #2a6a2a;padding:3px 6px;font-size:9px;color:#90d890;margin-top:4px;}
 </style>
 </head>
 <body>
 
-<!-- Starfield -->
 <div id="stars-bg"></div>
 
 <!-- ═══════════════════ PAGE 1: FORM ═══════════════════ -->
 <div id="pg-form" class="page active">
   <header>
-    <a class="logo" href="#">
+    <div class="logo" onclick="showForm()">
       <div class="logo-icon">✦</div>
       <span class="logo-text">TỬ VI LỘ TUYẾN</span>
-    </a>
-    <nav>
-      <a href="#"><span class="ico">📋</span> Lấy Lá Số</a>
-      <a href="#"><span class="ico">📂</span> Quản Lý Lá Số</a>
-    </nav>
-    <div style="display:flex;gap:10px;">
-      <button class="hdr-btn hdr-register">Đăng Ký</button>
-      <button class="hdr-btn hdr-login">Đăng Nhập</button>
     </div>
+    <nav>
+      <a href="#" onclick="showForm();return false;"><span>📋</span> Lấy Lá Số</a>
+      <a href="#"><span>📂</span> Quản Lý Lá Số</a>
+    </nav>
   </header>
 
   <div class="form-wrap">
     <div class="form-card">
       <h2>Thông tin lá số</h2>
 
-      <!-- Họ tên -->
       <div class="fg">
         <label class="fg-label">Họ tên</label>
         <input id="f-name" class="f-input" type="text" placeholder="FB Group: Tử Vi Lộ Tuyến">
       </div>
 
-      <!-- Giới tính -->
       <div class="fg">
         <div class="gender-row">
           <button class="g-btn active" id="g-nam" onclick="setGender('nam')">Nam ✓</button>
@@ -192,7 +198,6 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
         </div>
       </div>
 
-      <!-- Chọn lịch -->
       <div class="fg">
         <div class="sec-label">CHỌN LỊCH</div>
         <div class="cal-row">
@@ -201,59 +206,32 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
         </div>
       </div>
 
-      <!-- Ngày Tháng Năm -->
       <div class="fg">
         <div class="date-row">
-          <div class="sel-grp">
-            <label class="fg-label">Ngày</label>
-            <select id="f-day" class="f-input"></select>
-          </div>
-          <div class="sel-grp">
-            <label class="fg-label">Tháng</label>
-            <select id="f-month" class="f-input"></select>
-          </div>
-          <div class="sel-grp">
-            <label class="fg-label">Năm</label>
-            <select id="f-year" class="f-input"></select>
-          </div>
+          <div class="sel-grp"><label class="fg-label">Ngày</label><select id="f-day" class="f-input"></select></div>
+          <div class="sel-grp"><label class="fg-label">Tháng</label><select id="f-month" class="f-input"></select></div>
+          <div class="sel-grp"><label class="fg-label">Năm</label><select id="f-year" class="f-input"></select></div>
         </div>
       </div>
 
-      <!-- Giờ Phút -->
       <div class="fg">
         <div class="time-row">
-          <div class="sel-grp">
-            <label class="fg-label">Giờ sinh</label>
-            <select id="f-hour" class="f-input"></select>
-          </div>
-          <div class="sel-grp">
-            <label class="fg-label">Phút sinh</label>
-            <select id="f-min" class="f-input"></select>
-          </div>
+          <div class="sel-grp"><label class="fg-label">Giờ sinh</label><select id="f-hour" class="f-input"></select></div>
+          <div class="sel-grp"><label class="fg-label">Phút sinh</label><select id="f-min" class="f-input"></select></div>
         </div>
       </div>
 
-      <!-- Năm xem hạn -->
       <div class="fg">
         <div class="sec-label">NĂM XEM HẠN</div>
-        <div class="sel-grp">
-          <select id="f-viewyear" class="f-input"></select>
-        </div>
+        <div class="sel-grp"><select id="f-viewyear" class="f-input"></select></div>
       </div>
 
-      <!-- An sao -->
       <div class="chk-row">
         <input type="checkbox" id="f-ansao">
         <label for="f-ansao">An sao theo Tử Vi Lộ Tuyến</label>
       </div>
 
-      <!-- Submit -->
       <button class="btn-submit" onclick="showResult()">Lấy lá số</button>
-
-      <p class="form-footer">
-        <a href="#">Đăng nhập</a><br>
-        Chưa có tài khoản? <a href="#">Đăng ký</a>
-      </p>
     </div>
   </div>
 </div>
@@ -261,18 +239,14 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 <!-- ═══════════════════ PAGE 2: RESULT ═══════════════════ -->
 <div id="pg-result" class="page">
   <header>
-    <a class="logo" href="#">
+    <div class="logo" onclick="showForm()">
       <div class="logo-icon">✦</div>
       <span class="logo-text">TỬ VI LỘ TUYẾN</span>
-    </a>
-    <nav>
-      <a href="#"><span class="ico">📋</span> Lấy Lá Số</a>
-      <a href="#"><span class="ico">📂</span> Quản Lý Lá Số</a>
-    </nav>
-    <div style="display:flex;gap:10px;">
-      <button class="hdr-btn hdr-register">Đăng Ký</button>
-      <button class="hdr-btn hdr-login">Đăng Nhập</button>
     </div>
+    <nav>
+      <a href="#" onclick="showForm();return false;"><span>📋</span> Lấy Lá Số</a>
+      <a href="#"><span>📂</span> Quản Lý Lá Số</a>
+    </nav>
   </header>
 
   <div class="result-wrap">
@@ -286,14 +260,14 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
       </div>
 
       <div class="sb-title">Tùy chọn hiển thị</div>
-      <div class="chk-item"><input type="checkbox" id="cb1" checked><label for="cb1">Thiên Hình</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb2" checked><label for="cb2">Các phụ tinh</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb3" checked><label for="cb3">Lưu Lộc, Kinh, Đà tiểu vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb4"><label for="cb4">Lưu tứ hóa tiểu vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb5" checked><label for="cb5">Lưu niên tiểu vận khác</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb6"><label for="cb6">Lưu đại vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb7"><label for="cb7">Cung tiểu vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb8"><label for="cb8">Cung đại vận</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb1" checked onchange="toggleGroup(this,'thienhinh')"><label for="cb1">Thiên Hình</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb2" checked onchange="toggleGroup(this,'phutinh')"><label for="cb2">Các phụ tinh</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb3" checked onchange="toggleGroup(this,'luuloc')"><label for="cb3">Lưu Lộc, Kinh, Đà tiểu vận</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb4" onchange="toggleGroup(this,'luuhoa')"><label for="cb4">Lưu tứ hóa tiểu vận</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb5" checked onchange="toggleGroup(this,'luunien')"><label for="cb5">Lưu niên tiểu vận khác</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb6" onchange="toggleGroup(this,'daivan')"><label for="cb6">Lưu đại vận</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb7" onchange="toggleGroup(this,'cungtv')"><label for="cb7">Cung tiểu vận</label></div>
+      <div class="chk-item"><input type="checkbox" id="cb8" onchange="toggleGroup(this,'cungdv')"><label for="cb8">Cung đại vận</label></div>
 
       <div class="sb-link">
         📘 Hướng dẫn sử dụng: <a href="#">Xem chi tiết</a><br>
@@ -305,16 +279,10 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
     <div class="board-outer">
       <div class="board">
 
-        <!-- ROW 1 ───────────────────────────────── -->
-
         <!-- 1. K.Tị – NÔ BỘC -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">K.Tị</span>
-            <span class="h-name">NÔ BỘC</span>
-            <span class="h-num">52</span>
-          </div>
-          <div class="tvan-badge tvan-default">52</div>
+          <div class="h-top"><span class="h-chi">K.Tị</span><span class="h-name">NÔ BỘC</span><span class="h-num">52</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">52</div>
           <div class="mstar c-gray">Phá Quân <small>(H)</small></div>
           <div class="sstars">
             <span class="ss c-red">Hoa Quyền(B) · Địa Không(B)</span>
@@ -322,20 +290,17 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
             <span class="ss c-white">Thiên Y · Thiên Diêu(M)</span>
             <span class="ss c-orange">Nguyệt Đức · Lộc Tồn</span>
             <span class="ss c-gray">Kiếp Sát · Phá Toái</span>
-            <span class="ss c-white">UK.Văn Tinh · Thiên Thương</span>
             <span class="ss c-green">Tướng Quân · Long Đức</span>
+            <span class="ss c-purple grp-daivan">ĐV: Phá Quân cư Nô Bộc</span>
+            <span class="ss c-teal grp-cungdv">Cung ĐV: Kỵ tinh nhập</span>
           </div>
           <div class="h-foot">Tử<br>Tháng 12</div>
         </div>
 
         <!-- 2. C.Ngọ – THIÊN DI -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">C.Ngọ</span>
-            <span class="h-name">THIÊN DI</span>
-            <span class="h-num">62</span>
-          </div>
-          <div class="tvan-badge tvan-default">62</div>
+          <div class="h-top"><span class="h-chi">C.Ngọ</span><span class="h-name">THIÊN DI</span><span class="h-num">62</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">62</div>
           <div class="mstar c-red">Thái Dương <small>(M)</small></div>
           <div class="sstars">
             <span class="ss c-blue">Hữu Bật</span>
@@ -343,62 +308,50 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
             <span class="ss c-teal">Thiên Việt · Tướng Quân</span>
             <span class="ss c-yellow">Tuế Phá · Tuế Tinh</span>
             <span class="ss c-green">Thiên Khôi(B)</span>
-            <span class="ss c-orange">L.Kinh Huệ(B)</span>
-            <span class="ss c-gray">L.Thái Tuế</span>
+            <span class="ss c-orange grp-luuloc">L.Kinh Dương(B)</span>
+            <span class="ss c-gray grp-luunien">L.Thái Tuế</span>
+            <span class="ss c-purple grp-daivan">ĐV: Thái Dương hội Kỵ</span>
           </div>
           <div class="h-foot">Tuyệt<br>Tháng 1</div>
         </div>
 
         <!-- 3. T.Mùi – TẬT ÁCH -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">T.Mùi</span>
-            <span class="h-name">TẬT ÁCH</span>
-            <span class="h-num">72</span>
-          </div>
-          <div class="tvan-badge tvan-default">72</div>
+          <div class="h-top"><span class="h-chi">T.Mùi</span><span class="h-name">TẬT ÁCH</span><span class="h-num">72</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">72</div>
           <div class="mstar c-green">Thiên Phủ <small>(Đ)</small></div>
           <div class="sstars">
             <span class="ss c-red">Thiên Sứ · Hồng Loan</span>
             <span class="ss c-green">Tả Phù · Phi Liêm</span>
-            <span class="ss c-blue">Thiên Hình(B)</span>
+            <span class="ss c-blue grp-thienhinh">Thiên Hình(B)</span>
             <span class="ss c-gray">Thiên Quan · Đẩu Quân</span>
-            <span class="ss c-orange">Thiên Thiện(H)</span>
-            <span class="ss c-white">L.Thiên Mã</span>
+            <span class="ss c-white grp-luunien">L.Thiên Mã</span>
+            <span class="ss c-orange grp-luuhoa">L.Hóa Quyền – Thiên Cơ</span>
           </div>
           <div class="h-foot">Dưỡng<br>Tháng 2</div>
         </div>
 
         <!-- 4. N.Thân – TÀI BẠCH -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">N.Thân</span>
-            <span class="h-name">TÀI BẠCH</span>
-            <span class="h-num">82</span>
-          </div>
-          <div class="tvan-badge tvan-default">82</div>
+          <div class="h-top"><span class="h-chi">N.Thân</span><span class="h-name">TÀI BẠCH</span><span class="h-num">82</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">82</div>
           <div class="mstar c-blue">Thiên Cơ <small>(V)</small></div>
           <div class="mstar c-purple">Thái Âm <small>(V)</small></div>
           <div class="sstars">
             <span class="ss c-green">Tả Phù(B) · Hoa Tinh(M)</span>
             <span class="ss c-orange">Phi Liêm(M)</span>
             <span class="ss c-gray">Bạch Hổ · Thiên Phúc</span>
-            <span class="ss c-red">Hoa Lộc(B) · Phi Tinh</span>
-            <span class="ss c-white">L.Hồng Loan</span>
+            <span class="ss c-red grp-luunien">L.Hồng Loan</span>
+            <span class="ss c-yellow grp-luuhoa">L.Hóa Lộc – Thiên Đồng</span>
+            <span class="ss c-purple grp-daivan">ĐV: Thiên Cơ Hóa Quyền</span>
           </div>
           <div class="h-foot">Trường Sinh<br>Tháng 3</div>
         </div>
 
-        <!-- ROW 2 ───────────────────────────────── -->
-
         <!-- 5. M.Thìn – QUAN LỘC -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">M.Thìn</span>
-            <span class="h-name">QUAN LỘC</span>
-            <span class="h-num">42</span>
-          </div>
-          <div class="tvan-badge tvan-default">42</div>
+          <div class="h-top"><span class="h-chi">M.Thìn</span><span class="h-name">QUAN LỘC</span><span class="h-num">42</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">42</div>
           <div class="mstar c-gray">Thiên Đồng <small>(H)</small></div>
           <div class="sstars">
             <span class="ss c-blue">Văn Xương(B)</span>
@@ -406,6 +359,7 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
             <span class="ss c-green">Thanh Long · Quan Phù</span>
             <span class="ss c-white">Hoa Cái · Thiên La</span>
             <span class="ss c-teal">Long Trì · Địa La</span>
+            <span class="ss c-yellow grp-luuhoa">L.Hóa Khoa – Văn Xương</span>
           </div>
           <div class="h-foot">Mộ<br>Tháng 11</div>
         </div>
@@ -419,7 +373,7 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
             <div class="cs" style="color:#e65c00">https://tuvilotuyen.vn</div>
           </div>
           <div class="c-grid">
-            <span class="cl">Họ tên:</span><span class="cv" colspan="3">FB Group: Tử Vi Lộ Tuyến</span>
+            <span class="cl">Họ tên:</span><span class="cv" style="grid-column:span 3">FB Group: Tử Vi Lộ Tuyến</span>
             <span class="cl">Năm:</span><span class="cv">1984</span>
             <span class="cl">Can:</span><span class="cv red">Giáp Tý</span>
             <span class="cl">Tháng:</span><span class="cv">6 (S)</span>
@@ -451,139 +405,112 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 
         <!-- 7. Q.Dậu – TỬ TỨC -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">Q.Dậu</span>
-            <span class="h-name">TỬ TỨC</span>
-            <span class="h-num">92</span>
-          </div>
-          <div class="tvan-badge tvan-tuan" style="position:absolute;top:0;right:0">Tuần</div>
+          <div class="h-top"><span class="h-chi">Q.Dậu</span><span class="h-name">TỬ TỨC</span><span class="h-num">92</span></div>
+          <div class="tvan-badge tvan-tuan">Tuần</div>
           <div style="margin-top:18px;">
             <div class="mstar c-orange">Tham Lang <small>(H)</small></div>
             <div class="sstars">
               <span class="ss c-blue">Địa Hoa · Thiên Mỵ</span>
               <span class="ss c-gray">Thiên Không(B)</span>
               <span class="ss c-green">Phúc Đức</span>
-              <span class="ss c-white">L.Đà La</span>
+              <span class="ss c-orange grp-luuloc">L.Đà La</span>
+              <span class="ss c-teal grp-cungdv">Cung ĐV: Tử Tức hạn</span>
             </div>
           </div>
           <div class="h-foot">Mộc Dục<br>Tháng 5</div>
         </div>
 
-        <!-- ROW 3 ───────────────────────────────── -->
-
         <!-- 8. B.Mão – ĐIỀN TRẠCH -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">B.Mão</span>
-            <span class="h-name">ĐIỀN TRẠCH</span>
-            <span class="h-num">32</span>
-          </div>
-          <div class="tvan-badge tvan-default">32</div>
+          <div class="h-top"><span class="h-chi">B.Mão</span><span class="h-name">ĐIỀN TRẠCH</span><span class="h-num">32</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">32</div>
           <div class="sstars" style="margin-top:4px">
             <span class="ss c-red">Hồng Loan</span>
             <span class="ss c-orange">Kinh Dương(B)</span>
             <span class="ss c-blue">Thiên Âm · Thiêu Âm</span>
             <span class="ss c-green">Long Trì</span>
             <span class="ss c-gray">Địa La · Quan Phù</span>
-            <span class="ss c-white">L.Thiên My</span>
+            <span class="ss c-white grp-luunien">L.Thiên Cơ</span>
           </div>
           <div class="h-foot">Tử<br>Tháng 10</div>
         </div>
 
-        <!-- (CENTER continues) -->
+        <!-- (CENTER continues row 3) -->
 
         <!-- 9. G.Tuất – PHU THÊ -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">G.Tuất</span>
-            <span class="h-name">PHU THÊ</span>
-            <span class="h-num">102</span>
-          </div>
-          <div class="tvan-badge tvan-default">102</div>
+          <div class="h-top"><span class="h-chi">G.Tuất</span><span class="h-name">PHU THÊ</span><span class="h-num">102</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">102</div>
           <div class="mstar c-gray">Cự Môn <small>(H)</small></div>
           <div class="sstars">
             <span class="ss c-blue">Văn Khúc(B) · Quý Tú</span>
             <span class="ss c-green">Giải Thần · Điều Khách</span>
             <span class="ss c-orange">Phong Cách</span>
             <span class="ss c-gray">Địa Võng · Cô Thần</span>
+            <span class="ss c-teal grp-cungdv">Cung ĐV: Cự Môn Hãm</span>
           </div>
           <div class="h-foot">Quan Đới<br>Tháng 4</div>
         </div>
 
-        <!-- ROW 4 ───────────────────────────────── -->
-
         <!-- 10. B.Dần – PHÚC ĐỨC -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">B.Dần</span>
-            <span class="h-name">PHÚC ĐỨC</span>
-            <span class="h-num">22</span>
-          </div>
-          <div class="tvan-badge tvan-default">22</div>
+          <div class="h-top"><span class="h-chi">B.Dần</span><span class="h-name">PHÚC ĐỨC</span><span class="h-num">22</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">22</div>
           <div class="sstars" style="margin-top:4px">
             <span class="ss c-blue">Bắc Đẩu · Lưu Sĩ</span>
             <span class="ss c-green">Cô Thần · Thiên Mã</span>
             <span class="ss c-orange">Thiêu Dương</span>
-            <span class="ss c-red">Thiên Hình(M)</span>
+            <span class="ss c-red grp-thienhinh">Thiên Hình(M)</span>
             <span class="ss c-gray">Quan Phù · Phúc Đức</span>
+            <span class="ss c-purple grp-daivan">ĐV: Phúc Đức hạn vận</span>
           </div>
           <div class="h-foot">Suy<br>Tháng 9</div>
         </div>
 
         <!-- 11. D.Sửu – PHỤ MẪU -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">D.Sửu</span>
-            <span class="h-name">PHỤ MẪU</span>
-            <span class="h-num">12</span>
-          </div>
-          <div class="tvan-badge tvan-default">12</div>
+          <div class="h-top"><span class="h-chi">D.Sửu</span><span class="h-name">PHỤ MẪU</span><span class="h-num">12</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">12</div>
           <div class="mstar c-red">Liêm Trinh <small>(Đ)</small></div>
           <div class="mstar c-green">Thất Sát <small>(Đ)</small></div>
           <div class="sstars">
             <span class="ss c-orange">Hỏa Lộc(B) · Hỏa Thiên(H)</span>
             <span class="ss c-blue">Thiếu Dương · Quân Phù</span>
-            <span class="ss c-green">Hoa Lộc(B)</span>
-            <span class="ss c-gray">L.Kinh Dương</span>
-            <span class="ss c-white">L.Bạch Hổ</span>
+            <span class="ss c-green grp-luuloc">L.Lộc Tồn</span>
+            <span class="ss c-orange grp-luuloc">L.Kinh Dương</span>
+            <span class="ss c-white grp-luunien">L.Bạch Hổ</span>
+            <span class="ss c-red grp-luuhoa">L.Hóa Kỵ – Liêm Trinh</span>
           </div>
           <div class="h-foot">Bệnh<br>Tháng 9</div>
         </div>
 
         <!-- 12. B.Tý – MỆNH (THÂN) -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">B.Tý</span>
-            <span class="h-name">MỆNH <span class="than-lbl">THÂN</span></span>
-            <span class="h-num">2</span>
-          </div>
-          <div class="tvan-badge tvan-menh">2</div>
+          <div class="h-top"><span class="h-chi">B.Tý</span><span class="h-name">MỆNH <span class="than-lbl">THÂN</span></span><span class="h-num">2</span></div>
+          <div class="tvan-badge tvan-menh grp-cungtv">2</div>
           <div class="mstar c-purple">Thiên Lương <small>(V)</small></div>
           <div class="sstars">
             <span class="ss c-blue">Tả Phù · Thai Phú</span>
             <span class="ss c-orange">Thái Tuế · Thiên Khốc</span>
             <span class="ss c-green">Tam Thai</span>
-            <span class="ss c-gray">L.Thiên Hư</span>
+            <span class="ss c-gray grp-luunien">L.Thiên Hư</span>
             <span class="ss c-white">Hỏa Tinh(M)</span>
+            <span class="ss c-teal grp-cungdv">Cung ĐV: Mệnh chủ vận</span>
           </div>
           <div class="h-foot">Đế Vượng<br>Tháng 7</div>
         </div>
 
         <!-- 13. A.Hợi – HUYNH ĐỆ -->
         <div class="house">
-          <div class="h-top">
-            <span class="h-chi">A.Hợi</span>
-            <span class="h-name">HUYNH ĐỆ</span>
-            <span class="h-num">112</span>
-          </div>
-          <div class="tvan-badge tvan-default">112</div>
+          <div class="h-top"><span class="h-chi">A.Hợi</span><span class="h-name">HUYNH ĐỆ</span><span class="h-num">112</span></div>
+          <div class="tvan-badge tvan-default grp-cungtv">112</div>
           <div class="mstar c-teal">Thiên Tướng <small>(Đ)</small></div>
           <div class="sstars">
             <span class="ss c-gray">Địa Cái · Địa Hao(M)</span>
             <span class="ss c-green">Đại Cái · Đại Hao(M)</span>
             <span class="ss c-orange">Phục Binh</span>
             <span class="ss c-blue">Trúc Phú · Tiểu Hao</span>
-            <span class="ss c-white">Quan Đới · Tuần</span>
+            <span class="ss c-purple grp-daivan">ĐV: Thiên Tướng thuận</span>
           </div>
           <div class="h-foot">Lâm Quan<br>Tháng 6</div>
         </div>
@@ -596,17 +523,15 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 <script>
 /* ── Starfield ── */
 (function(){
-  const bg = document.getElementById('stars-bg');
+  const bg=document.getElementById('stars-bg');
   for(let i=0;i<160;i++){
-    const s=document.createElement('div');
-    s.className='star';
+    const s=document.createElement('div');s.className='star';
     const sz=(Math.random()*2+0.5).toFixed(1);
     s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--delay:${(Math.random()*4).toFixed(1)}s;--op:${(Math.random()*.7+.3).toFixed(2)}`;
     bg.appendChild(s);
   }
   for(let i=0;i<6;i++){
-    const s=document.createElement('div');
-    s.className='shoot';
+    const s=document.createElement('div');s.className='shoot';
     s.style.cssText=`top:${Math.random()*60}%;left:${Math.random()*60}%;--sd:${(Math.random()*8).toFixed(1)}s;`;
     bg.appendChild(s);
   }
@@ -617,8 +542,7 @@ function fill(id,from,to,fmt,def){
   const el=document.getElementById(id);
   for(let i=from;i<=to;i++){
     const o=document.createElement('option');
-    o.value=i;
-    o.textContent=fmt?fmt(i):i;
+    o.value=i;o.textContent=fmt?fmt(i):i;
     if(i===def)o.selected=true;
     el.appendChild(o);
   }
@@ -630,17 +554,13 @@ fill('f-hour',0,23,h=>h<10?'0'+h:h,11);
 fill('f-min',0,59,m=>m<10?'0'+m:m,30);
 fill('f-viewyear',2020,2040,null,2026);
 
-/* ── Gender toggle ── */
-let curGender='nam';
+/* ── Gender / Calendar toggle ── */
 function setGender(g){
-  curGender=g;
   document.getElementById('g-nam').className='g-btn'+(g==='nam'?' active':'');
   document.getElementById('g-nu').className='g-btn'+(g==='nu'?' active':'');
   document.getElementById('g-nam').textContent=g==='nam'?'Nam ✓':'Nam';
   document.getElementById('g-nu').textContent=g==='nu'?'Nữ ✓':'Nữ';
 }
-
-/* ── Calendar toggle ── */
 function setCal(c){
   document.getElementById('cal-dl').className='cal-btn'+(c==='dl'?' active':'');
   document.getElementById('cal-al').className='cal-btn'+(c==='al'?' active':'');
@@ -656,6 +576,23 @@ function showForm(){
   document.getElementById('pg-result').classList.remove('active');
   document.getElementById('pg-form').classList.add('active');
   window.scrollTo(0,0);
+}
+
+/* ── Display group toggle ── */
+// Groups that are SHOWN by default (checked): thienhinh, phutinh, luuloc, luunien
+// → unchecking adds body.hide-X
+// Groups that are HIDDEN by default (unchecked): luuhoa, daivan, cungtv, cungdv
+// → checking adds body.show-X
+
+function toggleGroup(cb, group){
+  const defaultOn = ['thienhinh','phutinh','luuloc','luunien'];
+  if(defaultOn.includes(group)){
+    // checked = show (normal), unchecked = hide
+    document.body.classList.toggle('hide-'+group, !cb.checked);
+  } else {
+    // unchecked = hidden (normal), checked = show
+    document.body.classList.toggle('show-'+group, cb.checked);
+  }
 }
 </script>
 </body>
