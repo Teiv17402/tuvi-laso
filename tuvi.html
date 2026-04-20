@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tử Vi Trường Nguyễn – Lá Số Tử Vi</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;min-height:100vh;overflow-x:hidden;}
@@ -217,6 +218,54 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1c2e50;color:#fff;padding:10px 22px;border-radius:9px;font-size:13.5px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(255,255,255,.12);white-space:nowrap;}
 .toast.show{opacity:1;}
 
+/* ══ LEAD FORM (dưới kết quả lá số) ══ */
+.lead-section{
+  margin-top:18px;
+  background:rgba(255,248,230,.97);
+  border-radius:14px;
+  padding:28px 32px;
+  border:1px solid rgba(180,150,80,.25);
+  box-shadow:0 4px 24px rgba(180,120,0,.12);
+  max-width:900px;
+  width:100%;
+}
+.lead-badge{
+  font-size:10px;font-weight:700;letter-spacing:1.2px;
+  color:#b8860b;text-transform:uppercase;margin-bottom:8px;
+}
+.lead-title{
+  font-size:20px;font-weight:800;color:#1a0e00;
+  margin-bottom:6px;line-height:1.35;
+}
+.lead-sub{
+  font-size:13px;color:#7a5c30;margin-bottom:20px;
+  border-bottom:1px solid rgba(180,150,80,.2);padding-bottom:14px;
+}
+.lead-fields{display:flex;flex-direction:column;gap:13px;}
+.lead-fg label{display:block;font-size:12px;color:#6a5030;margin-bottom:5px;font-weight:600;}
+.lead-fg input{
+  width:100%;padding:11px 14px;
+  background:#fff;border:1px solid rgba(160,120,50,.3);
+  border-radius:8px;color:#1a1000;font-size:14px;outline:none;
+  transition:border-color .2s;
+}
+.lead-fg input:focus{border-color:#b8860b;}
+.lead-fg input::placeholder{color:#bba878;}
+.btn-lead{
+  width:100%;margin-top:6px;padding:14px;
+  background:linear-gradient(90deg,#b8860b,#e65c00);
+  border:none;border-radius:10px;color:#fff;
+  font-size:15px;font-weight:700;cursor:pointer;
+  transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-lead:hover{opacity:.88;}
+.btn-lead:disabled{opacity:.6;cursor:not-allowed;}
+.lead-success{
+  display:none;text-align:center;padding:20px 0 8px;
+  color:#3a7a30;font-size:14px;font-weight:600;
+}
+.lead-success .ic{font-size:32px;margin-bottom:8px;}
+
 /* ══ MANAGE PAGE ══ */
 .manage-wrap{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:32px 20px;}
 .manage-wrap h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:6px;}
@@ -364,6 +413,12 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 @media(max-width:768px) and (orientation:landscape){
   .form-wrap{min-height:unset;padding:10px;}
   .board{min-width:560px;}
+}
+
+/* Lead form mobile */
+@media(max-width:768px){
+  .lead-section{padding:20px 16px;margin-top:10px;}
+  .lead-title{font-size:17px;}
 }
 
 /* ══ DESKTOP override: always show opts ══ */
@@ -1040,6 +1095,40 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
       </div><!-- .board -->
     </div><!-- .board-outer -->
   </div><!-- .result-wrap -->
+
+  <!-- ── LEAD FORM ── -->
+  <div style="display:flex;justify-content:center;padding:0 14px 28px;">
+    <div class="lead-section" id="lead-section">
+      <div class="lead-badge">Bộ não thứ 2</div>
+      <div class="lead-title">Để lại thông tin, mình sẽ liên hệ trong 24 giờ</div>
+      <div class="lead-sub">Không phải bước nào cũng giống nhau — mình đọc kỹ trước rồi mới nói chuyện.</div>
+
+      <div id="lead-success" class="lead-success">
+        <div class="ic">✅</div>
+        Mình đã nhận thông tin của bạn!<br>
+        <span style="color:#7a5c30;font-weight:400;font-size:12px;">Kiểm tra hộp thư email để xem xác nhận.</span>
+      </div>
+
+      <form id="lead-form" class="lead-fields" onsubmit="submitLead(event)">
+        <div class="lead-fg">
+          <label for="lead-name">Họ và tên</label>
+          <input id="lead-name" type="text" placeholder="Nguyễn Văn A" required>
+        </div>
+        <div class="lead-fg">
+          <label for="lead-email">Email</label>
+          <input id="lead-email" type="email" placeholder="example@gmail.com" required>
+        </div>
+        <div class="lead-fg">
+          <label for="lead-phone">Số điện thoại</label>
+          <input id="lead-phone" type="tel" placeholder="0912 345 678" required>
+        </div>
+        <button class="btn-lead" type="submit" id="btn-lead">
+          Gửi thông tin →
+        </button>
+      </form>
+    </div>
+  </div>
+
 </div><!-- #pg-result -->
 
 <!-- ══════════════════════════════════════
@@ -1153,6 +1242,50 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
      JAVASCRIPT
 ══════════════════════════════════════ -->
 <script>
+/* ────────────────────────────────────
+   EMAILJS INIT
+──────────────────────────────────── */
+emailjs.init('wVYbsq56VFbeHyQ8J');
+
+/* ────────────────────────────────────
+   SUBMIT LEAD FORM
+──────────────────────────────────── */
+function submitLead(e) {
+  e.preventDefault();
+  const name  = document.getElementById('lead-name').value.trim();
+  const email = document.getElementById('lead-email').value.trim();
+  const phone = document.getElementById('lead-phone').value.trim();
+  const btn   = document.getElementById('btn-lead');
+
+  if (!name || !email || !phone) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Đang gửi...';
+
+  const params = {
+    customer_name:  name,
+    to_email:       email,
+    customer_phone: phone
+  };
+
+  // Gửi song song: email xác nhận cho khách + thông báo về admin
+  Promise.all([
+    emailjs.send('service_06jlrcc', 'template_5khithn', params),
+    emailjs.send('service_06jlrcc', 'template_ocv3ets', params)
+  ])
+  .then(() => {
+    document.getElementById('lead-form').style.display = 'none';
+    document.getElementById('lead-success').style.display = 'block';
+    showToast('✅ Đã gửi thông tin thành công!');
+  })
+  .catch((err) => {
+    console.error('EmailJS error:', err);
+    btn.disabled = false;
+    btn.textContent = 'Gửi thông tin →';
+    showToast('❌ Gửi thất bại, thử lại nhé!');
+  });
+}
+
 /* ────────────────────────────────────
    STARFIELD
 ──────────────────────────────────── */
