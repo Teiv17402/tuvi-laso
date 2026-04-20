@@ -1240,7 +1240,8 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 /* ────────────────────────────────────
    EMAILJS INIT
 ──────────────────────────────────── */
-emailjs.init('wVYbsq56VFbeHyQ8J');
+// EmailJS v4 init
+(function(){ emailjs.init({ publicKey: 'wVYbsq56VFbeHyQ8J' }); })();
 
 /* ────────────────────────────────────
    SUBMIT LEAD FORM
@@ -1255,30 +1256,33 @@ function submitLead(e) {
   if (!name || !email || !phone) return;
 
   btn.disabled = true;
-  btn.textContent = 'Đang gửi...';
+  btn.innerHTML = '⏳ Đang gửi...';
 
+  // Truyền đủ tất cả biến mà template có thể dùng
   const params = {
     customer_name:  name,
     to_email:       email,
-    customer_phone: phone
+    customer_phone: phone,
+    email:          email,   // Reply To trong template
+    name:           name,    // From Name trong template
+    phone:          phone
   };
 
-  // Gửi song song: email xác nhận cho khách + thông báo về admin
-  Promise.all([
-    emailjs.send('service_06jlrcc', 'template_5khithn', params),
-    emailjs.send('service_06jlrcc', 'template_ocv3ets', params)
-  ])
-  .then(() => {
-    document.getElementById('lead-form').style.display = 'none';
-    document.getElementById('lead-success').style.display = 'block';
-    showToast('✅ Đã gửi thông tin thành công!');
-  })
-  .catch((err) => {
-    console.error('EmailJS error:', err);
-    btn.disabled = false;
-    btn.textContent = 'Gửi thông tin →';
-    showToast('❌ Gửi thất bại, thử lại nhé!');
-  });
+  // Gửi tuần tự để dễ debug nếu lỗi
+  emailjs.send('service_06jlrcc', 'template_5khithn', params)
+    .then(() => emailjs.send('service_06jlrcc', 'template_ocv3ets', params))
+    .then(() => {
+      document.getElementById('lead-form').style.display = 'none';
+      document.getElementById('lead-success').style.display = 'block';
+      showToast('✅ Đã gửi thông tin thành công!');
+    })
+    .catch((err) => {
+      console.error('EmailJS error:', JSON.stringify(err));
+      btn.disabled = false;
+      btn.innerHTML = 'Gửi thông tin →';
+      const msg = err && err.text ? err.text : 'Lỗi không xác định';
+      showToast('❌ Gửi thất bại: ' + msg);
+    });
 }
 
 /* ────────────────────────────────────
