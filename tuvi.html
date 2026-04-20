@@ -220,40 +220,37 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 
 /* ══ LEAD FORM (dưới kết quả lá số) ══ */
 .lead-section{
-  margin-top:18px;
-  background:rgba(255,248,230,.97);
+  margin-top:14px;
+  background:rgba(10,16,42,.88);
   border-radius:14px;
-  padding:28px 32px;
-  border:1px solid rgba(180,150,80,.25);
-  box-shadow:0 4px 24px rgba(180,120,0,.12);
+  padding:26px 32px;
+  border:1px solid rgba(249,168,37,.18);
+  box-shadow:0 4px 32px rgba(0,0,0,.4);
   max-width:900px;
   width:100%;
 }
-.lead-badge{
-  font-size:10px;font-weight:700;letter-spacing:1.2px;
-  color:#b8860b;text-transform:uppercase;margin-bottom:8px;
-}
+.lead-badge{display:none;}
 .lead-title{
-  font-size:20px;font-weight:800;color:#1a0e00;
-  margin-bottom:6px;line-height:1.35;
+  font-size:18px;font-weight:700;color:#f9e4a0;
+  margin-bottom:18px;line-height:1.4;
+  border-bottom:1px solid rgba(249,168,37,.15);
+  padding-bottom:14px;
 }
-.lead-sub{
-  font-size:13px;color:#7a5c30;margin-bottom:20px;
-  border-bottom:1px solid rgba(180,150,80,.2);padding-bottom:14px;
-}
-.lead-fields{display:flex;flex-direction:column;gap:13px;}
-.lead-fg label{display:block;font-size:12px;color:#6a5030;margin-bottom:5px;font-weight:600;}
+.lead-sub{display:none;}
+.lead-fields{display:flex;flex-direction:column;gap:12px;}
+.lead-fg label{display:block;font-size:11.5px;color:#8a9ab8;margin-bottom:4px;font-weight:600;letter-spacing:.3px;}
 .lead-fg input{
   width:100%;padding:11px 14px;
-  background:#fff;border:1px solid rgba(160,120,50,.3);
-  border-radius:8px;color:#1a1000;font-size:14px;outline:none;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;color:#fff;font-size:14px;outline:none;
   transition:border-color .2s;
 }
-.lead-fg input:focus{border-color:#b8860b;}
-.lead-fg input::placeholder{color:#bba878;}
+.lead-fg input:focus{border-color:#f9a825;}
+.lead-fg input::placeholder{color:#3d4e62;}
 .btn-lead{
-  width:100%;margin-top:6px;padding:14px;
-  background:linear-gradient(90deg,#b8860b,#e65c00);
+  width:100%;margin-top:6px;padding:13px;
+  background:linear-gradient(90deg,#f9a825,#e65c00);
   border:none;border-radius:10px;color:#fff;
   font-size:15px;font-weight:700;cursor:pointer;
   transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:8px;
@@ -264,6 +261,7 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
   display:none;text-align:center;padding:20px 0 8px;
   color:#3a7a30;font-size:14px;font-weight:600;
 }
+.lead-success{color:#4cba50;}
 .lead-success .ic{font-size:32px;margin-bottom:8px;}
 
 /* ══ MANAGE PAGE ══ */
@@ -417,8 +415,8 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 
 /* Lead form mobile */
 @media(max-width:768px){
-  .lead-section{padding:20px 16px;margin-top:10px;}
-  .lead-title{font-size:17px;}
+  .lead-section{padding:18px 14px;margin-top:8px;}
+  .lead-title{font-size:16px;margin-bottom:14px;padding-bottom:12px;}
 }
 
 /* ══ DESKTOP override: always show opts ══ */
