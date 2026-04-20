@@ -98,10 +98,11 @@ nav a:hover{color:#fff;}
 
 /* Share popup */
 .sb-share-wrap{position:relative;}
-.share-popup{position:absolute;top:calc(100% + 6px);left:0;z-index:300;background:#0d1530;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:6px;min-width:160px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.7);}
+.share-popup{position:absolute;top:calc(100% + 6px);left:0;z-index:300;background:#0d1530;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:6px;min-width:162px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.7);}
 .share-popup.open{display:block;}
-.share-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border:none;background:none;color:#ddd;cursor:pointer;border-radius:6px;font-size:13px;transition:background .15s;text-align:left;}
-.share-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+.share-btn{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border:none;background:none;color:#ddd;cursor:pointer;border-radius:7px;font-size:13px;transition:background .15s;text-align:left;}
+.share-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+.share-btn svg{flex-shrink:0;border-radius:4px;}
 
 /* Board */
 .board-outer{flex:1;display:flex;justify-content:center;align-items:flex-start;}
@@ -477,12 +478,21 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
         <div class="sb-share-wrap">
           <button class="sb-btn" onclick="toggleShare(event)">↗ Chia sẻ</button>
           <div id="share-popup" class="share-popup">
-            <button class="share-btn" onclick="shareFB()">📘 Facebook</button>
-            <button class="share-btn" onclick="shareIG()">📸 Instagram</button>
-            <button class="share-btn" onclick="shareTT()">🎵 TikTok</button>
+            <button class="share-btn" onclick="shareFB()">
+              <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="5" fill="#1877f2"/><path d="M16 8h-2a1 1 0 0 0-1 1v2h3l-.5 3H13v7h-3v-7H8v-3h2V9a4 4 0 0 1 4-4h2v3z" fill="#fff"/></svg>
+              Facebook
+            </button>
+            <button class="share-btn" onclick="shareIG()">
+              <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="6" fill="url(#ig)"/><rect x="6" y="6" width="12" height="12" rx="3.5" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="16.5" cy="7.5" r="1" fill="#fff"/></svg>
+              Instagram
+            </button>
+            <button class="share-btn" onclick="shareTT()">
+              <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="5" fill="#010101"/><path d="M18 8.5a4.5 4.5 0 0 1-2.8-.97v6.6a4.73 4.73 0 1 1-3.4-4.54v2.6a2.17 2.17 0 1 0 1.5 2.07V4h2.5c.1 1.3.94 2.42 2.2 2.83V8.5z" fill="#fff"/><path d="M18 8.5a4.5 4.5 0 0 1-2.8-.97v6.6a4.73 4.73 0 1 1-3.4-4.54v2.6a2.17 2.17 0 1 0 1.5 2.07V4h2.5c.1 1.3.94 2.42 2.2 2.83V8.5z" fill="none" stroke="#25f4ee" stroke-width="0.3"/></svg>
+              TikTok
+            </button>
           </div>
         </div>
-        <button class="sb-btn" onclick="openEditModal()">✏ Sửa</button>
+        <button class="sb-btn" onclick="showForm()">✏ Sửa</button>
       </div>
 
       <div class="sb-title">Tùy chọn hiển thị</div>
@@ -906,18 +916,18 @@ const CHI_AL = [
 
 /* ────────────────────────────────────
    GENERIC CUSTOM PICKER
+   NOTE: open/close handled by onclick="togglePicker(id)" in HTML
 ──────────────────────────────────── */
 function buildPicker(containerId, items, defVal, onSelect) {
   const container = document.getElementById(containerId);
-  const disp  = container.querySelector('.cp-disp');
-  const wrap  = container.querySelector('.cp-wrap');
-  const grid  = container.querySelector('.cp-grid');
+  const disp = container.querySelector('.cp-disp');
+  const grid = container.querySelector('.cp-grid');
 
   // Set initial display label
   const defItem = items.find(i => i.value === defVal);
   if (defItem) disp.querySelector('.cp-val').textContent = defItem.dispLabel || defItem.label;
 
-  // Build cells
+  // Build cells only – open/close is handled by togglePicker() via HTML onclick
   items.forEach(item => {
     const cell = document.createElement('div');
     cell.className = 'cp-cell' + (item.value === defVal ? ' selected' : '');
@@ -932,20 +942,6 @@ function buildPicker(containerId, items, defVal, onSelect) {
       onSelect(item.value);
     });
     grid.appendChild(cell);
-  });
-
-  // Toggle open/close
-  disp.addEventListener('click', function(e) {
-    e.stopPropagation();
-    const isOpen = wrap.classList.contains('open');
-    closeAllPickers();
-    if (!isOpen) {
-      wrap.classList.add('open');
-      disp.classList.add('open');
-      // Scroll selected cell into view
-      const sel = grid.querySelector('.cp-cell.selected');
-      if (sel) setTimeout(() => sel.scrollIntoView({block:'nearest', behavior:'instant'}), 20);
-    }
   });
 }
 
