@@ -227,6 +227,144 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 .ls-btn:hover{background:rgba(255,255,255,.14);color:#fff;}
 .ls-btn.del{border-color:rgba(255,80,80,.25);color:#f88;}
 .ls-btn.del:hover{background:rgba(255,60,60,.12);}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE – TABLET & MOBILE
+════════════════════════════════════════════ */
+
+/* ── Sidebar toggle (chỉ hiện trên mobile) ── */
+.sb-toggle-btn{display:none;}
+
+/* ══ TABLET ≤ 1024px ══ */
+@media(max-width:1024px){
+  .sidebar{width:175px;padding:11px;}
+  .sb-btns{gap:5px;}
+  .sb-btn{font-size:11px;padding:7px 3px;}
+  .house{padding:5px;font-size:10px;}
+  .mstar{font-size:11px;}
+  .ss{font-size:9px;}
+  .h-name{font-size:9.5px;}
+  .c-grid{font-size:9.5px;gap:1px 5px;}
+  .c-logo .ct{font-size:12px;}
+}
+
+/* ══ MOBILE ≤ 768px ══ */
+@media(max-width:768px){
+  /* ── Header ── */
+  header{padding:8px 14px;}
+  .logo-icon{width:32px;height:32px;font-size:15px;}
+  .logo-text{font-size:12.5px;}
+  nav{gap:10px;}
+  nav a{font-size:11.5px;gap:3px;}
+  .nav-label{display:none;}
+
+  /* ── Form page ── */
+  .form-wrap{padding:14px 10px;align-items:flex-start;min-height:calc(100dvh - 54px);}
+  .form-card{padding:20px 16px;border-radius:14px;}
+  .form-card h2{font-size:17px;margin-bottom:18px;}
+  .fg{margin-bottom:12px;}
+  .fg-label{font-size:10.5px;}
+  .f-input{padding:10px 11px;font-size:13px;}
+  .g-btn{padding:10px 0;font-size:13px;}
+  .cal-btn{padding:9px;font-size:12.5px;}
+  .btn-submit{padding:12px;font-size:15px;}
+
+  /* Date row: 3 cols vẫn giữ, nhưng cell nhỏ hơn */
+  .cp-disp{padding:9px 10px;font-size:13px;}
+  .cp-disp .arrow{font-size:9px;}
+
+  /* Picker dropdown: clamp width không overflow */
+  .cp-wrap{max-width:min(220px, calc(100vw - 24px));}
+  .cp-wrap.right{right:0;left:auto;}
+
+  /* ── Result page ── */
+  .result-wrap{flex-direction:column;padding:8px;gap:8px;min-height:unset;}
+
+  /* Sidebar full-width trên mobile */
+  .sidebar{
+    width:100%;position:static;
+    border-radius:10px;
+    padding:10px 14px;
+  }
+  .sb-btns{grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
+  .sb-btn{padding:9px 4px;font-size:11.5px;}
+
+  /* Toggle button hiển thị/ẩn tùy chọn */
+  .sb-toggle-btn{
+    display:flex;align-items:center;justify-content:space-between;
+    width:100%;background:none;border:none;
+    color:#c0ccd8;cursor:pointer;padding:6px 0;
+    font-size:11px;font-weight:700;letter-spacing:.5px;
+    text-transform:uppercase;
+  }
+  .sb-toggle-btn .arrow-icon{font-size:12px;transition:transform .2s;}
+  .sb-toggle-btn.open .arrow-icon{transform:rotate(180deg);}
+
+  /* Ẩn checkbox options mặc định trên mobile */
+  #sb-opts{display:none;}
+  #sb-opts.open{display:block;}
+
+  /* Board: horizontal scroll */
+  .board-outer{overflow-x:auto;-webkit-overflow-scrolling:touch;width:100%;}
+  .board{min-width:480px;max-width:none;}
+  .house{padding:4px;font-size:9.5px;min-height:100px;}
+  .mstar{font-size:10.5px;margin:2px 0 2px;}
+  .ss{font-size:8.5px;}
+  .h-top{margin-bottom:2px;}
+  .h-chi{font-size:9px;}
+  .h-name{font-size:9px;}
+  .h-num{font-size:9px;}
+  .h-foot{font-size:8px;}
+
+  /* Center panel */
+  .house-center{padding:10px 10px;}
+  .c-logo .ct{font-size:10.5px;}
+  .c-logo .cs{font-size:8.5px;}
+  .c-grid{font-size:8.5px;gap:1px 4px;}
+  .c-hr{margin:4px 0;}
+  .c-clink{font-size:8px;}
+  .c-tags .c-tag{font-size:8.5px;}
+
+  /* Manage page */
+  .manage-wrap{padding:20px 12px;}
+  .ls-card{flex-direction:column;align-items:flex-start;gap:8px;}
+  .ls-actions{width:100%;justify-content:flex-end;}
+
+  /* Modal */
+  .modal-box{padding:18px 16px;}
+  .m-date-row{grid-template-columns:1fr 1fr 1fr;}
+  .m-time-row{grid-template-columns:1fr 1fr;}
+}
+
+/* ══ SMALL MOBILE ≤ 480px ══ */
+@media(max-width:480px){
+  header{padding:7px 10px;}
+  .logo-text{font-size:11.5px;}
+  nav a{font-size:11px;}
+
+  .form-card{padding:18px 12px;}
+  .date-row{grid-template-columns:1fr 1fr 1fr;}
+
+  .board{min-width:380px;}
+  .house{padding:3px;min-height:88px;font-size:9px;}
+  .ss{font-size:8px;}
+  .mstar{font-size:10px;}
+
+  .sb-btns{grid-template-columns:repeat(4,1fr);}
+  .sb-btn{font-size:10.5px;padding:8px 2px;}
+}
+
+/* ══ LANDSCAPE MOBILE ══ */
+@media(max-width:768px) and (orientation:landscape){
+  .form-wrap{min-height:unset;padding:10px;}
+  .board{min-width:560px;}
+}
+
+/* ══ DESKTOP override: always show opts ══ */
+@media(min-width:769px){
+  #sb-opts{display:block!important;}
+  .sb-toggle-btn{display:none!important;}
+}
 </style>
 </head>
 <body class="cal-dl">
@@ -242,8 +380,8 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
       <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
-      <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
-      <a href="#" onclick="showManage();return false;">📂 Quản Lý Lá Số</a>
+      <a href="#" onclick="showForm();return false;">📋 <span class="nav-label">Lấy Lá Số</span></a>
+      <a href="#" onclick="showManage();return false;">📂 <span class="nav-label">Quản Lý Lá Số</span></a>
     </nav>
   </header>
 
@@ -494,8 +632,8 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
       <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
-      <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
-      <a href="#" onclick="showManage();return false;">📂 Quản Lý Lá Số</a>
+      <a href="#" onclick="showForm();return false;">📋 <span class="nav-label">Lấy Lá Số</span></a>
+      <a href="#" onclick="showManage();return false;">📂 <span class="nav-label">Quản Lý Lá Số</span></a>
     </nav>
   </header>
 
@@ -525,18 +663,25 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
         <button class="sb-btn" onclick="showForm()">✏ Sửa</button>
       </div>
 
-      <div class="sb-title">Tùy chọn hiển thị</div>
-      <div class="chk-item"><input type="checkbox" id="cb1" checked onchange="toggleGroup(this,'thienhinh')"><label for="cb1">Thiên Hình</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb2" checked onchange="toggleGroup(this,'phutinh')"><label for="cb2">Các phụ tinh</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb3" checked onchange="toggleGroup(this,'luuloc')"><label for="cb3">Lưu Lộc, Kinh, Đà tiểu vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb4" onchange="toggleGroup(this,'luuhoa')"><label for="cb4">Lưu tứ hóa tiểu vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb5" checked onchange="toggleGroup(this,'luunien')"><label for="cb5">Lưu niên tiểu vận khác</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb6" onchange="toggleGroup(this,'daivan')"><label for="cb6">Lưu đại vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb7" onchange="toggleGroup(this,'cungtv')"><label for="cb7">Cung tiểu vận</label></div>
-      <div class="chk-item"><input type="checkbox" id="cb8" onchange="toggleGroup(this,'cungdv')"><label for="cb8">Cung đại vận</label></div>
-      <div class="sb-link">
-        📘 Hướng dẫn: <a href="#">Xem chi tiết</a><br>
-        ✉ lienhe@tuvitruongnguyen.vn: <a href="#">Liên hệ</a>
+      <!-- Toggle (chỉ hiện mobile) -->
+      <button class="sb-toggle-btn" id="sb-toggle-btn" onclick="toggleSidebarOpts()">
+        <span>TÙY CHỌN HIỂN THỊ</span>
+        <span class="arrow-icon">▾</span>
+      </button>
+
+      <div id="sb-opts">
+        <div class="chk-item"><input type="checkbox" id="cb1" checked onchange="toggleGroup(this,'thienhinh')"><label for="cb1">Thiên Hình</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb2" checked onchange="toggleGroup(this,'phutinh')"><label for="cb2">Các phụ tinh</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb3" checked onchange="toggleGroup(this,'luuloc')"><label for="cb3">Lưu Lộc, Kinh, Đà tiểu vận</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb4" onchange="toggleGroup(this,'luuhoa')"><label for="cb4">Lưu tứ hóa tiểu vận</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb5" checked onchange="toggleGroup(this,'luunien')"><label for="cb5">Lưu niên tiểu vận khác</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb6" onchange="toggleGroup(this,'daivan')"><label for="cb6">Lưu đại vận</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb7" onchange="toggleGroup(this,'cungtv')"><label for="cb7">Cung tiểu vận</label></div>
+        <div class="chk-item"><input type="checkbox" id="cb8" onchange="toggleGroup(this,'cungdv')"><label for="cb8">Cung đại vận</label></div>
+        <div class="sb-link">
+          📘 Hướng dẫn: <a href="#">Xem chi tiết</a><br>
+          ✉ lienhe@tuvitruongnguyen.vn: <a href="#">Liên hệ</a>
+        </div>
       </div>
     </div>
 
@@ -861,8 +1006,8 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
       <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
-      <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
-      <a href="#" onclick="showManage();return false;">📂 Quản Lý Lá Số</a>
+      <a href="#" onclick="showForm();return false;">📋 <span class="nav-label">Lấy Lá Số</span></a>
+      <a href="#" onclick="showManage();return false;">📂 <span class="nav-label">Quản Lý Lá Số</span></a>
     </nav>
   </header>
   <div class="manage-wrap">
@@ -1422,6 +1567,17 @@ function toggleGroup(cb, group) {
   } else {
     document.body.classList.toggle('show-'+group, cb.checked);
   }
+}
+
+/* ────────────────────────────────────
+   TOGGLE SIDEBAR OPTIONS (mobile only)
+──────────────────────────────────── */
+function toggleSidebarOpts() {
+  const el = document.getElementById('sb-opts');
+  const btn = document.getElementById('sb-toggle-btn');
+  if (!el || !btn) return;
+  el.classList.toggle('open');
+  btn.classList.toggle('open');
 }
 
 /* ────────────────────────────────────
