@@ -3,82 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tử Vi Lộ Tuyến – Lá Số Tử Vi</title>
+<title>Tử Vi Trường Nguyễn – Lá Số Tử Vi</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;min-height:100vh;overflow-x:hidden;}
 
-/* ── Stars bg ── */
+/* Stars */
 #stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) var(--delay,0s) infinite;}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:var(--op,.9)}}
 .shoot{position:absolute;width:2px;height:2px;background:linear-gradient(to right,transparent,#fff);border-radius:50%;animation:shoot 4s linear var(--sd,0s) infinite;opacity:0;}
 @keyframes shoot{0%{transform:translate(0,0) rotate(-35deg);opacity:1}100%{transform:translate(300px,150px) rotate(-35deg);opacity:0}}
 
-/* ── Header ── */
+/* Header */
 header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:10px 28px;background:rgba(4,8,24,.85);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
-.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#4fc3f7 0%,#f9a825 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#4fc3f7,#f9a825);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
 .logo-text{font-weight:700;font-size:15px;color:#fff;letter-spacing:.5px;transition:color .2s;}
 .logo:hover .logo-text{color:#f9a825;}
 nav{display:flex;gap:22px;align-items:center;}
 nav a{color:#f9a825;text-decoration:none;font-size:13.5px;display:flex;align-items:center;gap:5px;transition:color .2s;}
 nav a:hover{color:#fff;}
 
-/* ── Pages ── */
-.page{display:none;}
-.page.active{display:block;}
+/* Pages */
+.page{display:none;} .page.active{display:block;}
 
-/* ════════ FORM PAGE ════════ */
+/* ══ FORM ══ */
 .form-wrap{position:relative;z-index:5;display:flex;justify-content:center;align-items:center;min-height:calc(100vh - 60px);padding:28px 16px;}
-.form-card{background:rgba(10,16,42,.94);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:34px 38px;width:472px;max-width:100%;backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.5);}
+.form-card{background:rgba(10,16,42,.94);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:34px 38px;width:480px;max-width:100%;backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.5);}
 .form-card h2{text-align:center;font-size:21px;font-weight:700;margin-bottom:26px;color:#fff;}
 .fg{margin-bottom:16px;}
 .fg-label{font-size:11px;color:#7a8fa8;margin-bottom:5px;display:block;letter-spacing:.3px;}
 .f-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;outline:none;transition:border-color .2s;}
 .f-input:focus{border-color:#f9a825;}
 .f-input::placeholder{color:#3d4e62;}
+select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23667'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+
+/* Gender */
 .gender-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .g-btn{padding:11px 0;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#aaa;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;}
 .g-btn.active{background:rgba(10,80,40,.55);border-color:#2ecc71;color:#fff;}
+
+/* Calendar */
 .sec-label{font-size:11px;font-weight:700;color:#7a8fa8;letter-spacing:.8px;margin-bottom:8px;}
 .cal-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:rgba(255,255,255,.05);border-radius:10px;padding:4px;}
 .cal-btn{padding:10px;border-radius:8px;border:none;background:transparent;color:#999;cursor:pointer;font-size:13.5px;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .2s;}
 .cal-btn.active{background:rgba(255,255,255,.16);color:#fff;}
+
+/* Date row */
 .date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
 .time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .sel-grp{position:relative;}
 .sel-grp .fg-label{margin-bottom:4px;}
-select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23667'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+
+/* ── Custom Day Picker ── */
+.day-picker{position:relative;}
+.day-display{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s;user-select:none;}
+.day-display:hover,.day-display.open{border-color:#f9a825;}
+.day-display .arrow{font-size:10px;color:#667;transition:transform .2s;}
+.day-display.open .arrow{transform:rotate(180deg);}
+.day-grid-wrap{position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:#0d1530;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;width:220px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.6);}
+.day-grid-wrap.open{display:block;}
+.day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.day-cell{padding:6px 2px;border-radius:6px;text-align:center;font-size:13px;cursor:pointer;color:#ccc;transition:all .15s;}
+.day-cell:hover{background:rgba(249,168,37,.2);color:#f9a825;}
+.day-cell.selected{background:#f9a825;color:#000;font-weight:700;}
+
+/* Checkbox */
 .chk-row{display:flex;align-items:center;gap:10px;margin:18px 0;}
-.chk-row input[type=checkbox]{width:17px;height:17px;accent-color:#f9a825;cursor:pointer;}
+.chk-row input{width:17px;height:17px;accent-color:#f9a825;cursor:pointer;}
 .chk-row label{font-size:13px;color:#ccc;cursor:pointer;}
-.btn-submit{width:100%;padding:14px;background:linear-gradient(90deg,#f9a825,#e65c00);border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:opacity .2s;position:relative;overflow:hidden;}
+
+/* Submit */
+.btn-submit{width:100%;padding:14px;background:linear-gradient(90deg,#f9a825,#e65c00);border:none;border-radius:10px;color:#fff;font-size:16px;font-weight:700;cursor:pointer;transition:opacity .2s;position:relative;overflow:hidden;}
 .btn-submit:hover{opacity:.9;}
 .btn-submit::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 40%,rgba(255,255,255,.15),transparent 60%);transform:translateX(-100%);animation:shimmer 2.5s infinite;}
 @keyframes shimmer{100%{transform:translateX(200%)}}
 
-/* ════════ RESULT PAGE ════════ */
+/* ══ RESULT ══ */
 .result-wrap{position:relative;z-index:5;display:flex;gap:14px;padding:14px;min-height:calc(100vh - 60px);}
 
-/* sidebar */
+/* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:rgba(10,16,42,.88);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,.07);height:fit-content;position:sticky;top:14px;}
 .sb-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px;}
 .sb-btn{padding:8px 4px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#ddd;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:background .2s;}
 .sb-btn:hover{background:rgba(255,255,255,.14);}
 .sb-title{font-size:10.5px;font-weight:700;color:#6a7d94;letter-spacing:.5px;margin-bottom:9px;text-transform:uppercase;}
 .chk-item{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
-.chk-item input[type=checkbox]{accent-color:#f9a825;cursor:pointer;}
+.chk-item input{accent-color:#f9a825;cursor:pointer;}
 .chk-item label{font-size:12px;color:#c0ccd8;cursor:pointer;line-height:1.3;}
 .sb-link{margin-top:12px;font-size:11.5px;line-height:1.8;}
 .sb-link a{color:#f9a825;text-decoration:none;}
-.sb-link a:hover{text-decoration:underline;}
 
-/* board */
+/* Board */
 .board-outer{flex:1;display:flex;justify-content:center;align-items:flex-start;}
 .board{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,minmax(150px,auto));gap:2px;background:#101828;border:2px solid #1c2840;border-radius:4px;width:100%;max-width:900px;}
-
-/* house cell */
 .house{background:#0a1020;border:1px solid #192030;padding:7px;position:relative;font-size:11px;overflow:hidden;}
 .h-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px;}
 .h-chi{font-size:10px;color:#7a90a8;font-weight:700;}
@@ -89,96 +108,64 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .tvan-menh{background:#0d2060;color:#7ab0ff;}
 .tvan-tuan{background:#7a4d00;color:#ffd580;}
 
-/* colors */
-.c-red{color:#ff6b6b;} .c-orange{color:#ffaa44;} .c-green{color:#4cba50;}
-.c-blue{color:#64b5f6;} .c-purple{color:#d090e0;} .c-yellow{color:#fff176;}
-.c-gray{color:#8aabb8;} .c-white{color:#ddeeff;} .c-teal{color:#4dd0c4;}
-
-/* main star */
+/* Colors */
+.c-red{color:#ff6b6b;}.c-orange{color:#ffaa44;}.c-green{color:#4cba50;}
+.c-blue{color:#64b5f6;}.c-purple{color:#d090e0;}.c-yellow{color:#fff176;}
+.c-gray{color:#8aabb8;}.c-white{color:#ddeeff;}.c-teal{color:#4dd0c4;}
 .mstar{font-size:12.5px;font-weight:700;margin:4px 0 3px;line-height:1.3;}
-
-/* sub stars */
 .sstars{display:flex;flex-direction:column;gap:1px;margin-top:2px;}
 .ss{font-size:9.5px;line-height:1.3;}
-.ss.c-red{color:#ef9a9a;} .ss.c-orange{color:#ffcc80;} .ss.c-green{color:#a5d6a7;}
-.ss.c-blue{color:#90caf9;} .ss.c-gray{color:#78909c;} .ss.c-white{color:#cfd8dc;}
-.ss.c-yellow{color:#fff59d;} .ss.c-purple{color:#ce93d8;} .ss.c-teal{color:#80cbc4;}
-
-/* position footer */
+.ss.c-red{color:#ef9a9a;}.ss.c-orange{color:#ffcc80;}.ss.c-green{color:#a5d6a7;}
+.ss.c-blue{color:#90caf9;}.ss.c-gray{color:#78909c;}.ss.c-white{color:#cfd8dc;}
+.ss.c-yellow{color:#fff59d;}.ss.c-purple{color:#ce93d8;}.ss.c-teal{color:#80cbc4;}
 .h-foot{position:absolute;bottom:4px;right:5px;font-size:8.5px;color:#3d5060;text-align:right;line-height:1.4;}
 
-/* center panel */
+/* Center panel */
 .house-center{grid-column:2/4;grid-row:2/4;background:#ece8dd;color:#333;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;}
-.c-logo{text-align:center;margin-bottom:10px;}
-.c-logo .ct{font-size:13px;font-weight:800;color:#1a1a2e;letter-spacing:.3px;}
-.c-logo .cs{font-size:10px;color:#666;margin-top:1px;}
+.c-logo{text-align:center;margin-bottom:8px;}
+.c-logo .ct{font-size:13px;font-weight:800;color:#1a1a2e;}
+.c-logo .cs{font-size:10px;color:#666;}
 .c-grid{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:2px 8px;font-size:10.5px;}
-.cl{color:#666;} .cv{font-weight:700;color:#1a1a2e;} .cv.red{color:#c62828;}
-.c-hr{border:none;border-top:1px solid #ccc;margin:8px 0;}
-.c-tags{display:flex;flex-direction:column;gap:3px;}
+.cl{color:#666;}.cv{font-weight:700;color:#1a1a2e;}.cv.red{color:#c62828;}
+.c-hr{border:none;border-top:1px solid #ccc;margin:6px 0;}
+.c-tags{display:flex;flex-direction:column;gap:2px;}
 .c-tag{font-size:10px;color:#1565c0;font-weight:700;}
-.c-clink{font-size:9px;color:#c62828;margin-top:8px;line-height:1.5;text-align:center;}
+.c-clink{font-size:9px;color:#c62828;margin-top:6px;line-height:1.5;text-align:center;}
 .c-wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-15deg);font-size:90px;color:rgba(0,0,0,.04);pointer-events:none;font-weight:900;white-space:nowrap;}
-
-/* badges */
 .than-lbl{display:inline-block;background:#b71c1c;color:#ef9a9a;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-left:3px;vertical-align:middle;font-weight:700;}
 
-/* ═══ DISPLAY GROUPS ═══
-   Groups controlled by sidebar checkboxes.
-   Use body class approach: body.show-X → show; body.hide-X → hide
-*/
-
-/* cb1: Thiên Hình – shown when cb1 checked (default: checked → visible) */
-.grp-thienhinh { display: inline; }
-body.hide-thienhinh .grp-thienhinh { display: none !important; }
-
-/* cb2: Các phụ tinh – shown when cb2 checked (default: checked → visible) */
-.sstars { display: flex; }
-body.hide-phutinh .sstars { display: none !important; }
-
-/* cb3: Lưu Lộc/Kinh/Đà tiểu vận – shown when cb3 checked (default: checked) */
-.grp-luuloc { display: inline; }
-body.hide-luuloc .grp-luuloc { display: none !important; }
-
-/* cb4: Lưu tứ hóa tiểu vận – HIDDEN by default (cb4 unchecked) */
-.grp-luuhoa { display: none; }
-body.show-luuhoa .grp-luuhoa { display: inline !important; }
-
-/* cb5: Lưu niên tiểu vận khác – shown when cb5 checked (default: checked) */
-.grp-luunien { display: inline; }
-body.hide-luunien .grp-luunien { display: none !important; }
-
-/* cb6: Lưu đại vận – HIDDEN by default (cb6 unchecked) */
-.grp-daivan { display: none; }
-body.show-daivan .grp-daivan { display: inline !important; }
-
-/* cb7: Cung tiểu vận – HIDDEN by default (cb7 unchecked) */
-.grp-cungtv { display: none; }
-body.show-cungtv .grp-cungtv { display: block !important; }
-
-/* cb8: Cung đại vận – HIDDEN by default (cb8 unchecked) */
-.grp-cungdv { display: none; }
-body.show-cungdv .grp-cungdv { display: block !important; }
-
-/* Đại vận indicator style */
-.dv-bar{background:#1a3a5c;border-top:1px solid #2a5a8c;padding:3px 6px;font-size:9px;color:#90caf9;margin-top:4px;border-radius:0 0 3px 3px;}
-.tv-bar{background:#1a3a1a;border-top:1px solid #2a6a2a;padding:3px 6px;font-size:9px;color:#90d890;margin-top:4px;}
+/* Display groups */
+.grp-thienhinh{display:inline;}
+body.hide-thienhinh .grp-thienhinh{display:none!important;}
+.sstars{display:flex;}
+body.hide-phutinh .sstars{display:none!important;}
+.grp-luuloc{display:inline;}
+body.hide-luuloc .grp-luuloc{display:none!important;}
+.grp-luuhoa{display:none;}
+body.show-luuhoa .grp-luuhoa{display:inline!important;}
+.grp-luunien{display:inline;}
+body.hide-luunien .grp-luunien{display:none!important;}
+.grp-daivan{display:none;}
+body.show-daivan .grp-daivan{display:inline!important;}
+.grp-cungtv{display:none;}
+body.show-cungtv .grp-cungtv{display:block!important;}
+.grp-cungdv{display:none;}
+body.show-cungdv .grp-cungdv{display:inline!important;}
 </style>
 </head>
 <body>
-
 <div id="stars-bg"></div>
 
-<!-- ═══════════════════ PAGE 1: FORM ═══════════════════ -->
+<!-- ══ PAGE 1: FORM ══ -->
 <div id="pg-form" class="page active">
   <header>
     <div class="logo" onclick="showForm()">
       <div class="logo-icon">✦</div>
-      <span class="logo-text">TỬ VI LỘ TUYẾN</span>
+      <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
-      <a href="#" onclick="showForm();return false;"><span>📋</span> Lấy Lá Số</a>
-      <a href="#"><span>📂</span> Quản Lý Lá Số</a>
+      <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
+      <a href="#">📂 Quản Lý Lá Số</a>
     </nav>
   </header>
 
@@ -188,7 +175,7 @@ body.show-cungdv .grp-cungdv { display: block !important; }
 
       <div class="fg">
         <label class="fg-label">Họ tên</label>
-        <input id="f-name" class="f-input" type="text" placeholder="FB Group: Tử Vi Lộ Tuyến">
+        <input id="f-name" class="f-input" type="text" placeholder="Nhập họ và tên...">
       </div>
 
       <div class="fg">
@@ -206,59 +193,82 @@ body.show-cungdv .grp-cungdv { display: block !important; }
         </div>
       </div>
 
+      <!-- Ngày Tháng Năm -->
       <div class="fg">
         <div class="date-row">
-          <div class="sel-grp"><label class="fg-label">Ngày</label><select id="f-day" class="f-input"></select></div>
-          <div class="sel-grp"><label class="fg-label">Tháng</label><select id="f-month" class="f-input"></select></div>
-          <div class="sel-grp"><label class="fg-label">Năm</label><select id="f-year" class="f-input"></select></div>
+          <!-- Custom Day Picker -->
+          <div class="sel-grp">
+            <label class="fg-label">Ngày</label>
+            <div class="day-picker" id="day-picker">
+              <div class="day-display" id="day-display" onclick="toggleDayPicker()">
+                <span id="day-value">15</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="day-grid-wrap" id="day-grid-wrap">
+                <div class="day-grid" id="day-grid"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sel-grp">
+            <label class="fg-label">Tháng</label>
+            <select id="f-month" class="f-input"></select>
+          </div>
+          <div class="sel-grp">
+            <label class="fg-label">Năm</label>
+            <select id="f-year" class="f-input"></select>
+          </div>
         </div>
       </div>
 
       <div class="fg">
         <div class="time-row">
-          <div class="sel-grp"><label class="fg-label">Giờ sinh</label><select id="f-hour" class="f-input"></select></div>
-          <div class="sel-grp"><label class="fg-label">Phút sinh</label><select id="f-min" class="f-input"></select></div>
+          <div class="sel-grp">
+            <label class="fg-label">Giờ sinh</label>
+            <select id="f-hour" class="f-input"></select>
+          </div>
+          <div class="sel-grp">
+            <label class="fg-label">Phút sinh</label>
+            <select id="f-min" class="f-input"></select>
+          </div>
         </div>
       </div>
 
       <div class="fg">
         <div class="sec-label">NĂM XEM HẠN</div>
-        <div class="sel-grp"><select id="f-viewyear" class="f-input"></select></div>
+        <select id="f-viewyear" class="f-input"></select>
       </div>
 
       <div class="chk-row">
         <input type="checkbox" id="f-ansao">
-        <label for="f-ansao">An sao theo Tử Vi Lộ Tuyến</label>
+        <label for="f-ansao">An sao theo Tử Vi Trường Nguyễn</label>
       </div>
 
-      <button class="btn-submit" onclick="showResult()">Lấy lá số</button>
+      <button class="btn-submit" onclick="submitForm()">Lấy lá số</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════ PAGE 2: RESULT ═══════════════════ -->
+<!-- ══ PAGE 2: RESULT ══ -->
 <div id="pg-result" class="page">
   <header>
     <div class="logo" onclick="showForm()">
       <div class="logo-icon">✦</div>
-      <span class="logo-text">TỬ VI LỘ TUYẾN</span>
+      <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
-      <a href="#" onclick="showForm();return false;"><span>📋</span> Lấy Lá Số</a>
-      <a href="#"><span>📂</span> Quản Lý Lá Số</a>
+      <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
+      <a href="#">📂 Quản Lý Lá Số</a>
     </nav>
   </header>
 
   <div class="result-wrap">
-    <!-- ── Sidebar ── -->
     <div class="sidebar">
       <div class="sb-btns">
         <button class="sb-btn">⬇ Tải xuống</button>
         <button class="sb-btn">💾 Lưu</button>
         <button class="sb-btn">↗ Chia sẻ</button>
-        <button class="sb-btn" onclick="showForm()">✏ Sửa thông tin</button>
+        <button class="sb-btn" onclick="showForm()">✏ Sửa</button>
       </div>
-
       <div class="sb-title">Tùy chọn hiển thị</div>
       <div class="chk-item"><input type="checkbox" id="cb1" checked onchange="toggleGroup(this,'thienhinh')"><label for="cb1">Thiên Hình</label></div>
       <div class="chk-item"><input type="checkbox" id="cb2" checked onchange="toggleGroup(this,'phutinh')"><label for="cb2">Các phụ tinh</label></div>
@@ -268,14 +278,12 @@ body.show-cungdv .grp-cungdv { display: block !important; }
       <div class="chk-item"><input type="checkbox" id="cb6" onchange="toggleGroup(this,'daivan')"><label for="cb6">Lưu đại vận</label></div>
       <div class="chk-item"><input type="checkbox" id="cb7" onchange="toggleGroup(this,'cungtv')"><label for="cb7">Cung tiểu vận</label></div>
       <div class="chk-item"><input type="checkbox" id="cb8" onchange="toggleGroup(this,'cungdv')"><label for="cb8">Cung đại vận</label></div>
-
       <div class="sb-link">
-        📘 Hướng dẫn sử dụng: <a href="#">Xem chi tiết</a><br>
-        ✉ hotro@tuvilotuyen.vn: <a href="#">Liên hệ</a>
+        📘 Hướng dẫn: <a href="#">Xem chi tiết</a><br>
+        ✉ lienhe@tuvitruongnguyen.vn: <a href="#">Liên hệ</a>
       </div>
     </div>
 
-    <!-- ── Board ── -->
     <div class="board-outer">
       <div class="board">
 
@@ -364,43 +372,38 @@ body.show-cungdv .grp-cungdv { display: block !important; }
           <div class="h-foot">Mộ<br>Tháng 11</div>
         </div>
 
-        <!-- 6. CENTER PANEL (2×2) -->
+        <!-- CENTER PANEL -->
         <div class="house house-center">
           <div class="c-wm">⊕</div>
           <div class="c-logo">
-            <div class="ct">TỬ VI LỘ TUYẾN</div>
+            <div class="ct">TỬ VI TRƯỜNG NGUYỄN</div>
             <div class="cs">Hệ thống cai mệnh đài bản</div>
-            <div class="cs" style="color:#e65c00">https://tuvilotuyen.vn</div>
+            <div class="cs" style="color:#e65c00">tuvitruongnguyen.vn</div>
           </div>
           <div class="c-grid">
-            <span class="cl">Họ tên:</span><span class="cv" style="grid-column:span 3">FB Group: Tử Vi Lộ Tuyến</span>
-            <span class="cl">Năm:</span><span class="cv">1984</span>
-            <span class="cl">Can:</span><span class="cv red">Giáp Tý</span>
-            <span class="cl">Tháng:</span><span class="cv">6 (S)</span>
-            <span class="cl">Can:</span><span class="cv">Canh Ngọ</span>
-            <span class="cl">Ngày:</span><span class="cv">15 (17)</span>
-            <span class="cl">Can:</span><span class="cv">Canh Thìn</span>
-            <span class="cl">Giờ:</span><span class="cv">11 giờ 30 phút</span>
-            <span class="cl">Can:</span><span class="cv">Nhâm Ngọ</span>
-            <span class="cl">Năm xem:</span><span class="cv red">2026</span>
-            <span class="cl">Can:</span><span class="cv red">Bính Ngọ</span>
+            <span class="cl">Họ tên:</span><span class="cv" id="cp-name" style="grid-column:span 3">—</span>
+            <span class="cl">Năm:</span><span class="cv" id="cp-year">—</span>
+            <span class="cl">Can:</span><span class="cv red" id="cp-year-cc">—</span>
+            <span class="cl">Tháng:</span><span class="cv" id="cp-month">—</span>
+            <span class="cl">Can:</span><span class="cv" id="cp-month-cc">—</span>
+            <span class="cl">Ngày:</span><span class="cv" id="cp-day">—</span>
+            <span class="cl">Giờ:</span><span class="cv" id="cp-hour">—</span>
+            <span class="cl">Can:</span><span class="cv" id="cp-hour-cc">—</span>
+            <span class="cl">Năm xem:</span><span class="cv red" id="cp-viewyear">—</span>
+            <span class="cl">Can:</span><span class="cv red" id="cp-viewyear-cc">—</span>
           </div>
           <hr class="c-hr">
           <div class="c-grid" style="font-size:10.5px">
-            <span class="cl">43 tuổi</span><span></span><span></span><span></span>
-            <span class="cl">Âm dương:</span><span class="cv" style="grid-column:span 3">Dương Nam</span>
-            <span class="cl">Mệnh:</span><span class="cv red" style="grid-column:span 3">Hải Trung Kim</span>
-            <span class="cl">Cục:</span><span class="cv" style="grid-column:span 3">Thủy Nhị Cục</span>
-            <span class="cl">Chủ mệnh:</span><span class="cv" style="grid-column:span 3">Tham Lang</span>
-            <span class="cl">Chủ thân:</span><span class="cv" style="grid-column:span 3">Hỏa Tinh</span>
+            <span class="cl">Tuổi:</span><span class="cv" id="cp-age">—</span><span></span><span></span>
+            <span class="cl">Âm dương:</span><span class="cv" id="cp-amduong" style="grid-column:span 3">—</span>
+            <span class="cl">Mệnh:</span><span class="cv red" id="cp-menh" style="grid-column:span 3">—</span>
+            <span class="cl">Cục:</span><span class="cv" id="cp-cuc" style="grid-column:span 3">—</span>
+            <span class="cl">Chủ mệnh:</span><span class="cv" id="cp-chumenh" style="grid-column:span 3">—</span>
+            <span class="cl">Chủ thân:</span><span class="cv" id="cp-chuthan" style="grid-column:span 3">—</span>
           </div>
           <hr class="c-hr">
-          <div class="c-tags">
-            <span class="c-tag">✦ Âm Dương thuận lý</span>
-            <span class="c-tag">✦ Mệnh sinh Cục</span>
-            <span class="c-tag">✦ Thân Mệnh đồng cung</span>
-          </div>
-          <p class="c-clink">Tham gia <a href="#" style="color:#c62828;font-weight:700">nhóm Facebook Tử Vi Lộ Tuyến</a><br>để được luận giải chi tiết, miễn phí</p>
+          <div class="c-tags" id="cp-tags"></div>
+          <p class="c-clink">Tham gia <a href="#" style="color:#c62828;font-weight:700">nhóm Tử Vi Trường Nguyễn</a><br>để được luận giải chi tiết, miễn phí</p>
         </div>
 
         <!-- 7. Q.Dậu – TỬ TỨC -->
@@ -434,8 +437,6 @@ body.show-cungdv .grp-cungdv { display: block !important; }
           </div>
           <div class="h-foot">Tử<br>Tháng 10</div>
         </div>
-
-        <!-- (CENTER continues row 3) -->
 
         <!-- 9. G.Tuất – PHU THÊ -->
         <div class="house">
@@ -515,10 +516,10 @@ body.show-cungdv .grp-cungdv { display: block !important; }
           <div class="h-foot">Lâm Quan<br>Tháng 6</div>
         </div>
 
-      </div><!-- /board -->
-    </div><!-- /board-outer -->
-  </div><!-- /result-wrap -->
-</div><!-- /pg-result -->
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ── Starfield ── */
@@ -537,7 +538,7 @@ body.show-cungdv .grp-cungdv { display: block !important; }
   }
 })();
 
-/* ── Dropdowns ── */
+/* ── Dropdowns (Month, Year, Hour, Min, ViewYear) ── */
 function fill(id,from,to,fmt,def){
   const el=document.getElementById(id);
   for(let i=from;i<=to;i++){
@@ -547,15 +548,55 @@ function fill(id,from,to,fmt,def){
     el.appendChild(o);
   }
 }
-fill('f-day',1,31,null,15);
 fill('f-month',1,12,null,6);
 fill('f-year',1900,2024,null,1984);
 fill('f-hour',0,23,h=>h<10?'0'+h:h,11);
 fill('f-min',0,59,m=>m<10?'0'+m:m,30);
 fill('f-viewyear',2020,2040,null,2026);
 
-/* ── Gender / Calendar toggle ── */
+/* ── Custom Day Picker ── */
+let selectedDay = 15;
+
+(function buildDayGrid(){
+  const grid = document.getElementById('day-grid');
+  for(let d=1;d<=31;d++){
+    const cell = document.createElement('div');
+    cell.className = 'day-cell' + (d===15?' selected':'');
+    cell.textContent = d;
+    cell.dataset.day = d;
+    cell.onclick = function(){ selectDay(d); };
+    grid.appendChild(cell);
+  }
+})();
+
+function selectDay(d){
+  selectedDay = d;
+  document.getElementById('day-value').textContent = d;
+  document.querySelectorAll('.day-cell').forEach(c=>{
+    c.classList.toggle('selected', parseInt(c.dataset.day)===d);
+  });
+  closeDayPicker();
+}
+
+function toggleDayPicker(){
+  const wrap = document.getElementById('day-grid-wrap');
+  const disp = document.getElementById('day-display');
+  const isOpen = wrap.classList.contains('open');
+  if(isOpen){ closeDayPicker(); } else { wrap.classList.add('open'); disp.classList.add('open'); }
+}
+function closeDayPicker(){
+  document.getElementById('day-grid-wrap').classList.remove('open');
+  document.getElementById('day-display').classList.remove('open');
+}
+// Close on outside click
+document.addEventListener('click', function(e){
+  if(!document.getElementById('day-picker').contains(e.target)) closeDayPicker();
+});
+
+/* ── Gender / Calendar ── */
+let curGender='nam';
 function setGender(g){
+  curGender=g;
   document.getElementById('g-nam').className='g-btn'+(g==='nam'?' active':'');
   document.getElementById('g-nu').className='g-btn'+(g==='nu'?' active':'');
   document.getElementById('g-nam').textContent=g==='nam'?'Nam ✓':'Nam';
@@ -566,7 +607,106 @@ function setCal(c){
   document.getElementById('cal-al').className='cal-btn'+(c==='al'?' active':'');
 }
 
-/* ── Page switch ── */
+/* ── Can Chi Calculations ── */
+const CAN  = ['Canh','Tân','Nhâm','Quý','Giáp','Ất','Bính','Đinh','Mậu','Kỷ'];
+const CHI  = ['Thân','Dậu','Tuất','Hợi','Tý','Sửu','Dần','Mão','Thìn','Tị','Ngọ','Mùi'];
+const CHI_GIO = ['Tý','Sửu','Dần','Mão','Thìn','Tị','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const THANG_CHI = ['Dần','Mão','Thìn','Tị','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi','Tý','Sửu'];
+
+const MENH_NAPAM = [
+  'Hải Trung Kim','Lô Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim',
+  'Sơn Đầu Hỏa','Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc',
+  'Tuyền Trung Thủy','Ốc Thượng Thổ','Tịch Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy',
+  'Sa Trung Kim','Sơn Hạ Hỏa','Bình Địa Mộc','Bích Thượng Thổ','Kim Bạc Kim',
+  'Phúc Đăng Hỏa','Thiên Hà Thủy','Đại Trạch Thổ','Thoa Xuyến Kim','Tang Thố Mộc',
+  'Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy'
+];
+
+function getCanChi(y){ return CAN[y%10]+' '+CHI[y%12]; }
+
+function getMenh(y){
+  const idx = Math.floor(((y-1924)%60+60)%60/2);
+  return MENH_NAPAM[idx];
+}
+
+function getGioCC(h){
+  // 2 hours per chi, starting Tý at 23:00–01:00
+  const chiIdx = Math.floor(((h+1)%24)/2);
+  return CHI_GIO[chiIdx];
+}
+
+function getThangCC(m){
+  return THANG_CHI[m-1];
+}
+
+function getAmDuong(y, gender){
+  const isDuong = y%2===0; // even year = Dương
+  if(gender==='nam') return isDuong?'Dương Nam':'Âm Nam';
+  return isDuong?'Âm Nữ':'Dương Nữ';
+}
+
+// Simplified Cục & Chủ mệnh/thân (placeholder based on mệnh element)
+const MENH_TO_CUC = {
+  'Kim':'Kim Tứ Cục','Hỏa':'Hỏa Lục Cục','Mộc':'Mộc Tam Cục',
+  'Thủy':'Thủy Nhị Cục','Thổ':'Thổ Ngũ Cục'
+};
+const CHU_MENH_LIST = ['Tham Lang','Cự Môn','Lộc Tồn','Văn Khúc','Liêm Trinh','Vũ Khúc','Phá Quân','Tả Phù','Hữu Bật','Thiên Cơ'];
+const CHU_THAN_LIST = ['Hỏa Tinh','Thiên Tướng','Thiên Đồng','Văn Xương','Vũ Khúc','Thiên Lương'];
+
+/* ── Submit Form & Populate Center Panel ── */
+function submitForm(){
+  const name     = document.getElementById('f-name').value.trim() || '(Chưa nhập)';
+  const month    = parseInt(document.getElementById('f-month').value);
+  const year     = parseInt(document.getElementById('f-year').value);
+  const hour     = parseInt(document.getElementById('f-hour').value);
+  const min      = parseInt(document.getElementById('f-min').value);
+  const viewYear = parseInt(document.getElementById('f-viewyear').value);
+
+  const yearCC     = getCanChi(year);
+  const viewYearCC = getCanChi(viewYear);
+  const menh       = getMenh(year);
+  const menhEl     = menh.split(' ').pop(); // last word = element
+  const cuc        = MENH_TO_CUC[menhEl] || 'Thủy Nhị Cục';
+  const amduong    = getAmDuong(year, curGender);
+  const tuoi       = viewYear - year + 1;
+  const thangCC    = getThangCC(month);
+  const gioCC      = getGioCC(hour);
+  const minStr     = min<10?'0'+min:min;
+
+  // Deterministic but varied chủ mệnh/thân based on year+hour
+  const chuMenh = CHU_MENH_LIST[(year + hour) % CHU_MENH_LIST.length];
+  const chuThan  = CHU_THAN_LIST[(year + month) % CHU_THAN_LIST.length];
+
+  // Populate center panel
+  document.getElementById('cp-name').textContent     = name;
+  document.getElementById('cp-year').textContent     = year;
+  document.getElementById('cp-year-cc').textContent  = yearCC;
+  document.getElementById('cp-month').textContent    = month;
+  document.getElementById('cp-month-cc').textContent = thangCC;
+  document.getElementById('cp-day').textContent      = selectedDay;
+  document.getElementById('cp-hour').textContent     = `${hour} giờ ${minStr} phút`;
+  document.getElementById('cp-hour-cc').textContent  = gioCC;
+  document.getElementById('cp-viewyear').textContent = viewYear;
+  document.getElementById('cp-viewyear-cc').textContent = viewYearCC;
+  document.getElementById('cp-age').textContent      = tuoi + ' tuổi';
+  document.getElementById('cp-amduong').textContent  = amduong;
+  document.getElementById('cp-menh').textContent     = menh;
+  document.getElementById('cp-cuc').textContent      = cuc;
+  document.getElementById('cp-chumenh').textContent  = chuMenh;
+  document.getElementById('cp-chuthan').textContent  = chuThan;
+
+  // Tags
+  const tags = [];
+  if(amduong.includes('Dương')&&curGender==='nam') tags.push('✦ Âm Dương thuận lý');
+  if(amduong.includes('Âm')&&curGender==='nu')     tags.push('✦ Âm Dương thuận lý');
+  tags.push('✦ Mệnh '+menhEl+' sinh Cục');
+  if(hour>=11&&hour<=13) tags.push('✦ Thân Mệnh đồng cung');
+  document.getElementById('cp-tags').innerHTML = tags.map(t=>`<span class="c-tag">${t}</span>`).join('');
+
+  showResult();
+}
+
+/* ── Page Switch ── */
 function showResult(){
   document.getElementById('pg-form').classList.remove('active');
   document.getElementById('pg-result').classList.add('active');
@@ -578,20 +718,13 @@ function showForm(){
   window.scrollTo(0,0);
 }
 
-/* ── Display group toggle ── */
-// Groups that are SHOWN by default (checked): thienhinh, phutinh, luuloc, luunien
-// → unchecking adds body.hide-X
-// Groups that are HIDDEN by default (unchecked): luuhoa, daivan, cungtv, cungdv
-// → checking adds body.show-X
-
-function toggleGroup(cb, group){
-  const defaultOn = ['thienhinh','phutinh','luuloc','luunien'];
+/* ── Display Group Toggle ── */
+function toggleGroup(cb,group){
+  const defaultOn=['thienhinh','phutinh','luuloc','luunien'];
   if(defaultOn.includes(group)){
-    // checked = show (normal), unchecked = hide
-    document.body.classList.toggle('hide-'+group, !cb.checked);
+    document.body.classList.toggle('hide-'+group,!cb.checked);
   } else {
-    // unchecked = hidden (normal), checked = show
-    document.body.classList.toggle('show-'+group, cb.checked);
+    document.body.classList.toggle('show-'+group,cb.checked);
   }
 }
 </script>
