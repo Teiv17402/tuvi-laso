@@ -160,6 +160,12 @@ body.show-cungtv .grp-cungtv{display:block!important;}
 .grp-cungdv{display:none;}
 body.show-cungdv .grp-cungdv{display:inline!important;}
 
+/* ══ ÂM LỊCH SECTION ══ */
+.al-row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.al-namDL-note{font-size:10px;color:#5a8a5a;margin-top:4px;}
+/* Zodiac hour cells wider */
+#picker-al-gio .cp-cell{font-size:11px;padding:6px 3px;white-space:nowrap;}
+
 /* ══ EDIT MODAL ══ */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
 .modal-overlay.active{opacity:1;pointer-events:all;}
@@ -234,89 +240,194 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
         </div>
       </div>
 
-      <!-- Ngày – Tháng – Năm -->
-      <div class="fg">
-        <div class="date-row">
+      <!-- ══ DƯƠNG LỊCH fields ══ -->
+      <div id="dl-section">
 
-          <!-- Ngày picker (day-grid) -->
-          <div class="sel-grp">
-            <label class="fg-label">Ngày</label>
-            <div class="c-picker" id="picker-day">
-              <div class="cp-disp" id="day-display" onclick="togglePicker('picker-day')">
-                <span class="cp-val" id="day-value">15</span>
-                <span class="arrow">▼</span>
-              </div>
-              <div class="cp-wrap" id="day-wrap" style="width:220px;">
-                <div class="cp-grid" id="day-grid" style="grid-template-columns:repeat(7,1fr)"></div>
+        <!-- Ngày – Tháng – Năm -->
+        <div class="fg">
+          <div class="date-row">
+
+            <!-- Ngày picker (day-grid) -->
+            <div class="sel-grp">
+              <label class="fg-label">Ngày</label>
+              <div class="c-picker" id="picker-day">
+                <div class="cp-disp" id="day-display" onclick="togglePicker('picker-day')">
+                  <span class="cp-val" id="day-value">15</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap" id="day-wrap" style="width:220px;">
+                  <div class="cp-grid" id="day-grid" style="grid-template-columns:repeat(7,1fr)"></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Tháng picker -->
-          <div class="sel-grp">
-            <label class="fg-label">Tháng</label>
-            <div class="c-picker" id="picker-month">
-              <div class="cp-disp" onclick="togglePicker('picker-month')">
-                <span class="cp-val">Tháng 6</span>
-                <span class="arrow">▼</span>
-              </div>
-              <div class="cp-wrap" style="width:198px;">
-                <div class="cp-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+            <!-- Tháng picker -->
+            <div class="sel-grp">
+              <label class="fg-label">Tháng</label>
+              <div class="c-picker" id="picker-month">
+                <div class="cp-disp" onclick="togglePicker('picker-month')">
+                  <span class="cp-val">Tháng 6</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap" style="width:198px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Năm picker -->
-          <div class="sel-grp">
-            <label class="fg-label">Năm</label>
-            <div class="c-picker" id="picker-year">
-              <div class="cp-disp" onclick="togglePicker('picker-year')">
-                <span class="cp-val">1984</span>
-                <span class="arrow">▼</span>
-              </div>
-              <div class="cp-wrap right" style="width:210px;max-height:200px;">
-                <div class="cp-grid" style="grid-template-columns:repeat(5,1fr)"></div>
+            <!-- Năm picker -->
+            <div class="sel-grp">
+              <label class="fg-label">Năm</label>
+              <div class="c-picker" id="picker-year">
+                <div class="cp-disp" onclick="togglePicker('picker-year')">
+                  <span class="cp-val">1984</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap right" style="width:210px;max-height:200px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(5,1fr)"></div>
+                </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
 
-      <!-- Giờ – Phút -->
-      <div class="fg">
-        <div class="time-row">
+        <!-- Giờ – Phút -->
+        <div class="fg">
+          <div class="time-row">
 
-          <!-- Giờ sinh picker -->
-          <div class="sel-grp">
-            <label class="fg-label">Giờ sinh</label>
-            <div class="c-picker" id="picker-hour">
-              <div class="cp-disp" onclick="togglePicker('picker-hour')">
-                <span class="cp-val">11h</span>
-                <span class="arrow">▼</span>
-              </div>
-              <div class="cp-wrap" style="width:210px;">
-                <div class="cp-grid" style="grid-template-columns:repeat(6,1fr)"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Phút sinh picker -->
-          <div class="sel-grp">
-            <label class="fg-label">Phút sinh</label>
-            <div class="c-picker" id="picker-min">
-              <div class="cp-disp" onclick="togglePicker('picker-min')">
-                <span class="cp-val">30</span>
-                <span class="arrow">▼</span>
-              </div>
-              <div class="cp-wrap right" style="width:210px;max-height:180px;">
-                <div class="cp-grid" style="grid-template-columns:repeat(6,1fr)"></div>
+            <!-- Giờ sinh picker -->
+            <div class="sel-grp">
+              <label class="fg-label">Giờ sinh</label>
+              <div class="c-picker" id="picker-hour">
+                <div class="cp-disp" onclick="togglePicker('picker-hour')">
+                  <span class="cp-val">11h</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap" style="width:210px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(6,1fr)"></div>
+                </div>
               </div>
             </div>
-          </div>
 
+            <!-- Phút sinh picker -->
+            <div class="sel-grp">
+              <label class="fg-label">Phút sinh</label>
+              <div class="c-picker" id="picker-min">
+                <div class="cp-disp" onclick="togglePicker('picker-min')">
+                  <span class="cp-val">30</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap right" style="width:210px;max-height:180px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(6,1fr)"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </div>
+
+      </div><!-- #dl-section -->
+
+      <!-- ══ ÂM LỊCH fields ══ -->
+      <div id="al-section" style="display:none">
+
+        <!-- Ngày + Tháng (âm) -->
+        <div class="fg">
+          <div class="al-row2">
+            <div class="sel-grp">
+              <label class="fg-label">Ngày</label>
+              <div class="c-picker" id="picker-al-day">
+                <div class="cp-disp" onclick="togglePicker('picker-al-day')">
+                  <span class="cp-val">15</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap" style="width:220px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(7,1fr)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="sel-grp">
+              <label class="fg-label">Tháng</label>
+              <div class="c-picker" id="picker-al-month">
+                <div class="cp-disp" onclick="togglePicker('picker-al-month')">
+                  <span class="cp-val">Tháng 6</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap right" style="width:198px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Can năm + Chi năm -->
+        <div class="fg">
+          <div class="al-row2">
+            <div class="sel-grp">
+              <label class="fg-label">Can năm</label>
+              <div class="c-picker" id="picker-can">
+                <div class="cp-disp" onclick="togglePicker('picker-can')">
+                  <span class="cp-val">Giáp</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap" style="width:200px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(5,1fr)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="sel-grp">
+              <label class="fg-label">Chi năm</label>
+              <div class="c-picker" id="picker-chi">
+                <div class="cp-disp" onclick="togglePicker('picker-chi')">
+                  <span class="cp-val">Tý</span>
+                  <span class="arrow">▼</span>
+                </div>
+                <div class="cp-wrap right" style="width:180px;">
+                  <div class="cp-grid" style="grid-template-columns:repeat(4,1fr)"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Giờ sinh (địa chi) -->
+        <div class="fg">
+          <label class="fg-label">Giờ</label>
+          <div class="c-picker" id="picker-al-gio">
+            <div class="cp-disp" onclick="togglePicker('picker-al-gio')">
+              <span class="cp-val">Ngọ (11h-13h)</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="cp-wrap" style="width:280px;">
+              <div class="cp-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Năm sinh dương lịch đối chiếu -->
+        <div class="fg">
+          <label class="fg-label">Năm sinh dương lịch đối chiếu</label>
+          <div class="c-picker" id="picker-al-namDL">
+            <div class="cp-disp" onclick="togglePicker('picker-al-namDL')">
+              <span class="cp-val">1984</span>
+              <span class="arrow">▼</span>
+            </div>
+            <div class="cp-wrap" style="width:210px;max-height:200px;">
+              <div class="cp-grid" style="grid-template-columns:repeat(5,1fr)"></div>
+            </div>
+          </div>
+          <div class="al-namDL-note" id="al-namDL-note">✓ Tự động tính từ Can+Chi</div>
+        </div>
+
+        <!-- Tháng nhuận -->
+        <div class="chk-row" style="margin:10px 0 14px">
+          <input type="checkbox" id="f-thangNhuan" onchange="alThangNhuan=this.checked">
+          <label for="f-thangNhuan">Tháng nhuận</label>
+        </div>
+
+      </div><!-- #al-section -->
 
       <!-- Năm xem hạn -->
       <div class="fg">
@@ -739,6 +850,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
 /* ────────────────────────────────────
    PICKER STATE
 ──────────────────────────────────── */
+// ── Dương lịch state
 let selectedDay      = 15;
 let selectedMonth    = 6;
 let selectedYear     = 1984;
@@ -747,8 +859,50 @@ let selectedMin      = 30;
 let selectedViewYear = 2026;
 let curGender        = 'nam';
 let curCal           = 'dl';
-let currentLS        = null;  // lá số hiện tại (để Lưu)
+let currentLS        = null;
 let modalGender      = 'nam';
+
+// ── Âm lịch state
+let alDay       = 15;
+let alMonth     = 6;
+let alCanIdx    = 4;   // Giáp = year%10 = 4
+let alChiIdx    = 4;   // Tý   = year%12 = 4  → 1984
+let alGioIdx    = 6;   // Ngọ (index 6)
+let alNamDL     = 1984;
+let alThangNhuan = false;
+
+// ── Zodiac hours
+const ZODIAC_HOURS = [
+  {chi:'Tý',   range:'23h-1h',  hour:23},
+  {chi:'Sửu',  range:'1h-3h',   hour:1 },
+  {chi:'Dần',  range:'3h-5h',   hour:3 },
+  {chi:'Mão',  range:'5h-7h',   hour:5 },
+  {chi:'Thìn', range:'7h-9h',   hour:7 },
+  {chi:'Tị',   range:'9h-11h',  hour:9 },
+  {chi:'Ngọ',  range:'11h-13h', hour:11},
+  {chi:'Mùi',  range:'13h-15h', hour:13},
+  {chi:'Thân', range:'15h-17h', hour:15},
+  {chi:'Dậu',  range:'17h-19h', hour:17},
+  {chi:'Tuất', range:'19h-21h', hour:19},
+  {chi:'Hợi',  range:'21h-23h', hour:21},
+];
+
+// ── Can/Chi in display order
+const CAN_AL = [
+  {name:'Giáp', idx:4}, {name:'Ất',  idx:5},
+  {name:'Bính', idx:6}, {name:'Đinh',idx:7},
+  {name:'Mậu',  idx:8}, {name:'Kỷ',  idx:9},
+  {name:'Canh', idx:0}, {name:'Tân',  idx:1},
+  {name:'Nhâm', idx:2}, {name:'Quý',  idx:3},
+];
+const CHI_AL = [
+  {name:'Tý',   idx:4}, {name:'Sửu', idx:5},
+  {name:'Dần',  idx:6}, {name:'Mão', idx:7},
+  {name:'Thìn', idx:8}, {name:'Tị',  idx:9},
+  {name:'Ngọ',  idx:10},{name:'Mùi', idx:11},
+  {name:'Thân', idx:0}, {name:'Dậu', idx:1},
+  {name:'Tuất', idx:2}, {name:'Hợi', idx:3},
+];
 
 /* ────────────────────────────────────
    GENERIC CUSTOM PICKER
@@ -910,6 +1064,97 @@ buildPicker('picker-viewyear',
 );
 
 /* ────────────────────────────────────
+   ÂM LỊCH PICKERS
+──────────────────────────────────── */
+
+// ── AL Day picker (7 cols, 1–30)
+(function(){
+  const grid = document.querySelector('#picker-al-day .cp-grid');
+  const disp = document.querySelector('#picker-al-day .cp-disp');
+  for (let d = 1; d <= 30; d++) {
+    const cell = document.createElement('div');
+    cell.className = 'cp-cell' + (d === alDay ? ' selected' : '');
+    cell.textContent = d;
+    cell.dataset.val = d;
+    cell.addEventListener('click', function(e) {
+      e.stopPropagation();
+      alDay = d;
+      grid.querySelectorAll('.cp-cell').forEach(c => c.classList.remove('selected'));
+      cell.classList.add('selected');
+      disp.querySelector('.cp-val').textContent = d;
+      closeAllPickers();
+    });
+    grid.appendChild(cell);
+  }
+})();
+
+// ── AL Month picker (3 cols, 1–12)
+buildPicker('picker-al-month',
+  Array.from({length:12}, (_,i) => ({
+    value: i+1, label: 'Th.'+(i+1), dispLabel: 'Tháng '+(i+1)
+  })),
+  alMonth,
+  v => { alMonth = v; }
+);
+
+// ── Can năm picker (5 cols, Giáp→Quý)
+buildPicker('picker-can',
+  CAN_AL.map(c => ({ value: c.idx, label: c.name })),
+  alCanIdx,
+  v => { alCanIdx = v; autoCalcNamDL(); }
+);
+
+// ── Chi năm picker (4 cols, Tý→Hợi)
+buildPicker('picker-chi',
+  CHI_AL.map(c => ({ value: c.idx, label: c.name })),
+  alChiIdx,
+  v => { alChiIdx = v; autoCalcNamDL(); }
+);
+
+// ── Giờ địa chi picker (3 cols, 12 zodiac hours)
+buildPicker('picker-al-gio',
+  ZODIAC_HOURS.map((z, i) => ({
+    value: i,
+    label: z.chi + '\n(' + z.range + ')',
+    dispLabel: z.chi + ' (' + z.range + ')'
+  })),
+  alGioIdx,
+  v => { alGioIdx = v; }
+);
+// Multi-line display for zodiac cells
+document.querySelectorAll('#picker-al-gio .cp-cell').forEach(c => {
+  c.style.whiteSpace = 'pre-line';
+  c.style.lineHeight = '1.3';
+  c.style.fontSize = '11px';
+});
+
+// ── AL Năm DL đối chiếu picker (5 cols, 1900–2024)
+buildPicker('picker-al-namDL',
+  Array.from({length:125}, (_,i) => ({ value: 1900+i, label: String(1900+i) })),
+  alNamDL,
+  v => { alNamDL = v; document.getElementById('al-namDL-note').textContent = '✎ Đã chỉnh thủ công'; }
+);
+
+// ── Auto-calculate Gregorian year from Can + Chi
+function autoCalcNamDL() {
+  const matches = [];
+  for (let y = 1900; y <= 2024; y++) {
+    if (y % 10 === alCanIdx && y % 12 === alChiIdx) matches.push(y);
+  }
+  if (matches.length === 0) return;
+  // Pick year closest to (selectedViewYear - 20) as typical birth year
+  const target = selectedViewYear - 25;
+  alNamDL = matches.reduce((a, b) =>
+    Math.abs(a - target) <= Math.abs(b - target) ? a : b
+  );
+  updatePicker('picker-al-namDL', alNamDL, String(alNamDL));
+  // Show can chi name
+  const canName = CAN_AL.find(c => c.idx === alCanIdx)?.name || '';
+  const chiName = CHI_AL.find(c => c.idx === alChiIdx)?.name || '';
+  document.getElementById('al-namDL-note').textContent = '✓ ' + canName + ' ' + chiName + ' → ' + alNamDL;
+}
+
+/* ────────────────────────────────────
    GENDER / CALENDAR
 ──────────────────────────────────── */
 function setGender(g) {
@@ -923,6 +1168,9 @@ function setCal(c) {
   curCal = c;
   document.getElementById('cal-dl').className = 'cal-btn' + (c==='dl'?' active':'');
   document.getElementById('cal-al').className = 'cal-btn' + (c==='al'?' active':'');
+  document.getElementById('dl-section').style.display = (c==='dl') ? '' : 'none';
+  document.getElementById('al-section').style.display = (c==='al') ? '' : 'none';
+  closeAllPickers();
 }
 
 /* ────────────────────────────────────
@@ -965,28 +1213,54 @@ const CHU_THAN_LIST = ['Hỏa Tinh','Thiên Tướng','Thiên Đồng','Văn Xư
 function submitForm() {
   const name = document.getElementById('f-name').value.trim() || '(Chưa nhập)';
 
-  const yearCC     = getCanChi(selectedYear);
+  // ── Chọn dữ liệu theo loại lịch
+  let birthYear, birthMonth, birthDay, birthHourNum, birthHourStr, birthHourCC, birthMonthCC;
+
+  if (curCal === 'al') {
+    // Âm lịch
+    birthYear    = alNamDL;
+    birthMonth   = alMonth;
+    birthDay     = alDay;
+    birthHourNum = ZODIAC_HOURS[alGioIdx].hour;
+    const canName = CAN_AL.find(c => c.idx === alCanIdx)?.name || '';
+    const chiName = CHI_AL.find(c => c.idx === alChiIdx)?.name || '';
+    birthHourStr = ZODIAC_HOURS[alGioIdx].chi + ' (' + ZODIAC_HOURS[alGioIdx].range + ')';
+    birthHourCC  = ZODIAC_HOURS[alGioIdx].chi;
+    birthMonthCC = getThangCC(birthMonth) + (alThangNhuan ? ' (nhuận)' : '');
+
+    document.getElementById('cp-year').textContent     = canName + ' ' + chiName;
+    document.getElementById('cp-year-cc').textContent  = '(' + birthYear + ')';
+  } else {
+    // Dương lịch
+    birthYear    = selectedYear;
+    birthMonth   = selectedMonth;
+    birthDay     = selectedDay;
+    birthHourNum = selectedHour;
+    const minStr = String(selectedMin).padStart(2,'0');
+    birthHourStr = `${selectedHour} giờ ${minStr} phút`;
+    birthHourCC  = getGioCC(selectedHour);
+    birthMonthCC = getThangCC(birthMonth);
+
+    document.getElementById('cp-year').textContent     = birthYear;
+    document.getElementById('cp-year-cc').textContent  = getCanChi(birthYear);
+  }
+
   const viewYearCC = getCanChi(selectedViewYear);
-  const menh       = getMenh(selectedYear);
+  const menh       = getMenh(birthYear);
   const menhEl     = menh.split(' ').pop();
   const cuc        = MENH_TO_CUC[menhEl] || 'Thủy Nhị Cục';
-  const amduong    = getAmDuong(selectedYear, curGender);
-  const tuoi       = selectedViewYear - selectedYear + 1;
-  const thangCC    = getThangCC(selectedMonth);
-  const gioCC      = getGioCC(selectedHour);
-  const minStr     = String(selectedMin).padStart(2,'0');
-  const chuMenh    = CHU_MENH_LIST[(selectedYear + selectedHour) % CHU_MENH_LIST.length];
-  const chuThan    = CHU_THAN_LIST[(selectedYear + selectedMonth) % CHU_THAN_LIST.length];
+  const amduong    = getAmDuong(birthYear, curGender);
+  const tuoi       = selectedViewYear - birthYear + 1;
+  const chuMenh    = CHU_MENH_LIST[(birthYear + birthHourNum) % CHU_MENH_LIST.length];
+  const chuThan    = CHU_THAN_LIST[(birthYear + birthMonth)   % CHU_THAN_LIST.length];
 
   // Populate center panel
   document.getElementById('cp-name').textContent     = name;
-  document.getElementById('cp-year').textContent     = selectedYear;
-  document.getElementById('cp-year-cc').textContent  = yearCC;
-  document.getElementById('cp-month').textContent    = selectedMonth;
-  document.getElementById('cp-month-cc').textContent = thangCC;
-  document.getElementById('cp-day').textContent      = selectedDay;
-  document.getElementById('cp-hour').textContent     = `${selectedHour} giờ ${minStr} phút`;
-  document.getElementById('cp-hour-cc').textContent  = gioCC;
+  document.getElementById('cp-month').textContent    = birthMonth;
+  document.getElementById('cp-month-cc').textContent = birthMonthCC;
+  document.getElementById('cp-day').textContent      = birthDay;
+  document.getElementById('cp-hour').textContent     = birthHourStr;
+  document.getElementById('cp-hour-cc').textContent  = birthHourCC;
   document.getElementById('cp-viewyear').textContent = selectedViewYear;
   document.getElementById('cp-viewyear-cc').textContent = viewYearCC;
   document.getElementById('cp-age').textContent      = tuoi + ' tuổi';
@@ -1001,14 +1275,16 @@ function submitForm() {
   if (amduong.includes('Dương') && curGender==='nam') tags.push('✦ Âm Dương thuận lý');
   if (amduong.includes('Âm')    && curGender==='nu')  tags.push('✦ Âm Dương thuận lý');
   tags.push('✦ Mệnh ' + menhEl + ' sinh Cục');
-  if (selectedHour >= 11 && selectedHour <= 13) tags.push('✦ Thân Mệnh đồng cung');
+  if (birthHourNum >= 11 && birthHourNum <= 13) tags.push('✦ Thân Mệnh đồng cung');
+  if (curCal === 'al') tags.push('✦ Nhập theo Âm lịch');
   document.getElementById('cp-tags').innerHTML = tags.map(t => `<span class="c-tag">${t}</span>`).join('');
 
-  // Save current state for Lưu button
+  // Save state
   currentLS = {
     name, gender: curGender, cal: curCal,
-    day: selectedDay, month: selectedMonth, year: selectedYear,
-    hour: selectedHour, min: selectedMin, viewYear: selectedViewYear
+    day: birthDay, month: birthMonth, year: birthYear,
+    hour: birthHourNum, min: (curCal==='al' ? 0 : selectedMin),
+    viewYear: selectedViewYear
   };
 
   showResult();
