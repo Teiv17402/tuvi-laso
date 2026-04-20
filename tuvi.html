@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tử Vi Trường Nguyễn – Lá Số Tử Vi</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;min-height:100vh;overflow-x:hidden;}
@@ -37,7 +38,6 @@ nav a:hover{color:#fff;}
 .f-input{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;outline:none;transition:border-color .2s;}
 .f-input:focus{border-color:#f9a825;}
 .f-input::placeholder{color:#3d4e62;}
-select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23667'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
 
 /* Gender */
 .gender-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
@@ -56,18 +56,19 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .sel-grp{position:relative;}
 .sel-grp .fg-label{margin-bottom:4px;}
 
-/* ── Custom Day Picker ── */
-.day-picker{position:relative;}
-.day-display{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s;user-select:none;}
-.day-display:hover,.day-display.open{border-color:#f9a825;}
-.day-display .arrow{font-size:10px;color:#667;transition:transform .2s;}
-.day-display.open .arrow{transform:rotate(180deg);}
-.day-grid-wrap{position:absolute;top:calc(100% + 4px);left:0;z-index:100;background:#0d1530;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;width:220px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.6);}
-.day-grid-wrap.open{display:block;}
-.day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-.day-cell{padding:6px 2px;border-radius:6px;text-align:center;font-size:13px;cursor:pointer;color:#ccc;transition:all .15s;}
-.day-cell:hover{background:rgba(249,168,37,.2);color:#f9a825;}
-.day-cell.selected{background:#f9a825;color:#000;font-weight:700;}
+/* ══ CUSTOM PICKER (day, month, year, hour, min, viewyear) ══ */
+.c-picker{position:relative;}
+.cp-disp{width:100%;padding:11px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;color:#fff;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s;user-select:none;}
+.cp-disp:hover,.cp-disp.open{border-color:#f9a825;}
+.cp-disp .arrow{font-size:10px;color:#667;transition:transform .2s;flex-shrink:0;margin-left:6px;}
+.cp-disp.open .arrow{transform:rotate(180deg);}
+.cp-wrap{position:absolute;top:calc(100% + 4px);left:0;z-index:200;background:#0d1530;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.7);overflow-y:auto;}
+.cp-wrap.right{left:auto;right:0;}
+.cp-wrap.open{display:block;}
+.cp-grid{display:grid;gap:4px;}
+.cp-cell{padding:6px 2px;border-radius:6px;text-align:center;font-size:12px;cursor:pointer;color:#ccc;transition:all .15s;}
+.cp-cell:hover{background:rgba(249,168,37,.2);color:#f9a825;}
+.cp-cell.selected{background:#f9a825;color:#000;font-weight:700;}
 
 /* Checkbox */
 .chk-row{display:flex;align-items:center;gap:10px;margin:18px 0;}
@@ -86,7 +87,7 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 /* Sidebar */
 .sidebar{width:210px;flex-shrink:0;background:rgba(10,16,42,.88);border-radius:10px;padding:14px;border:1px solid rgba(255,255,255,.07);height:fit-content;position:sticky;top:14px;}
 .sb-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px;}
-.sb-btn{padding:8px 4px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#ddd;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:background .2s;}
+.sb-btn{padding:8px 4px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#ddd;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:background .2s;width:100%;}
 .sb-btn:hover{background:rgba(255,255,255,.14);}
 .sb-title{font-size:10.5px;font-weight:700;color:#6a7d94;letter-spacing:.5px;margin-bottom:9px;text-transform:uppercase;}
 .chk-item{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
@@ -94,6 +95,13 @@ select.f-input{appearance:none;cursor:pointer;padding-right:28px;background-imag
 .chk-item label{font-size:12px;color:#c0ccd8;cursor:pointer;line-height:1.3;}
 .sb-link{margin-top:12px;font-size:11.5px;line-height:1.8;}
 .sb-link a{color:#f9a825;text-decoration:none;}
+
+/* Share popup */
+.sb-share-wrap{position:relative;}
+.share-popup{position:absolute;top:calc(100% + 6px);left:0;z-index:300;background:#0d1530;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:6px;min-width:160px;display:none;box-shadow:0 8px 32px rgba(0,0,0,.7);}
+.share-popup.open{display:block;}
+.share-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border:none;background:none;color:#ddd;cursor:pointer;border-radius:6px;font-size:13px;transition:background .15s;text-align:left;}
+.share-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
 
 /* Board */
 .board-outer{flex:1;display:flex;justify-content:center;align-items:flex-start;}
@@ -151,12 +159,45 @@ body.show-daivan .grp-daivan{display:inline!important;}
 body.show-cungtv .grp-cungtv{display:block!important;}
 .grp-cungdv{display:none;}
 body.show-cungdv .grp-cungdv{display:inline!important;}
+
+/* ══ EDIT MODAL ══ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.active{opacity:1;pointer-events:all;}
+.modal-box{background:#0a1028;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:24px 26px;width:440px;max-width:93vw;max-height:88vh;overflow-y:auto;position:relative;transform:translateY(12px);transition:transform .2s;}
+.modal-overlay.active .modal-box{transform:translateY(0);}
+.modal-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;}
+.modal-close{background:none;border:none;color:#888;cursor:pointer;font-size:20px;line-height:1;padding:0 2px;transition:color .15s;}
+.modal-close:hover{color:#fff;}
+.m-date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.m-time-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* ══ TOAST ══ */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#1c2e50;color:#fff;padding:10px 22px;border-radius:9px;font-size:13.5px;z-index:2000;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(255,255,255,.12);white-space:nowrap;}
+.toast.show{opacity:1;}
+
+/* ══ MANAGE PAGE ══ */
+.manage-wrap{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:32px 20px;}
+.manage-wrap h2{color:#fff;font-size:20px;font-weight:700;margin-bottom:6px;}
+.manage-sub{color:#7a8fa8;font-size:13px;margin-bottom:24px;}
+.manage-empty{color:#4a5e7a;text-align:center;padding:50px 0;font-size:14px;}
+.ls-card{background:rgba(10,16,42,.88);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:12px;transition:border-color .2s;}
+.ls-card:hover{border-color:rgba(249,168,37,.3);}
+.ls-info{flex:1;}
+.ls-name{color:#fff;font-weight:700;font-size:14px;}
+.ls-meta{color:#7a8fa8;font-size:12px;margin-top:3px;}
+.ls-actions{display:flex;gap:8px;flex-shrink:0;}
+.ls-btn{padding:7px 14px;border-radius:7px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#ddd;font-size:12px;cursor:pointer;transition:all .2s;}
+.ls-btn:hover{background:rgba(255,255,255,.14);color:#fff;}
+.ls-btn.del{border-color:rgba(255,80,80,.25);color:#f88;}
+.ls-btn.del:hover{background:rgba(255,60,60,.12);}
 </style>
 </head>
 <body>
 <div id="stars-bg"></div>
 
-<!-- ══ PAGE 1: FORM ══ -->
+<!-- ══════════════════════════════════════
+     PAGE 1 – FORM NHẬP THÔNG TIN
+══════════════════════════════════════ -->
 <div id="pg-form" class="page active">
   <header>
     <div class="logo" onclick="showForm()">
@@ -165,7 +206,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
     </div>
     <nav>
       <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
-      <a href="#">📂 Quản Lý Lá Số</a>
+      <a href="#" onclick="showManage();return false;">📂 Quản Lý Lá Số</a>
     </nav>
   </header>
 
@@ -193,49 +234,102 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
         </div>
       </div>
 
-      <!-- Ngày Tháng Năm -->
+      <!-- Ngày – Tháng – Năm -->
       <div class="fg">
         <div class="date-row">
-          <!-- Custom Day Picker -->
+
+          <!-- Ngày picker (day-grid) -->
           <div class="sel-grp">
             <label class="fg-label">Ngày</label>
-            <div class="day-picker" id="day-picker">
-              <div class="day-display" id="day-display" onclick="toggleDayPicker()">
-                <span id="day-value">15</span>
+            <div class="c-picker" id="picker-day">
+              <div class="cp-disp" id="day-display" onclick="togglePicker('picker-day')">
+                <span class="cp-val" id="day-value">15</span>
                 <span class="arrow">▼</span>
               </div>
-              <div class="day-grid-wrap" id="day-grid-wrap">
-                <div class="day-grid" id="day-grid"></div>
+              <div class="cp-wrap" id="day-wrap" style="width:220px;">
+                <div class="cp-grid" id="day-grid" style="grid-template-columns:repeat(7,1fr)"></div>
               </div>
             </div>
           </div>
+
+          <!-- Tháng picker -->
           <div class="sel-grp">
             <label class="fg-label">Tháng</label>
-            <select id="f-month" class="f-input"></select>
+            <div class="c-picker" id="picker-month">
+              <div class="cp-disp" onclick="togglePicker('picker-month')">
+                <span class="cp-val">Tháng 6</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="cp-wrap" style="width:198px;">
+                <div class="cp-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+              </div>
+            </div>
           </div>
+
+          <!-- Năm picker -->
           <div class="sel-grp">
             <label class="fg-label">Năm</label>
-            <select id="f-year" class="f-input"></select>
+            <div class="c-picker" id="picker-year">
+              <div class="cp-disp" onclick="togglePicker('picker-year')">
+                <span class="cp-val">1984</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="cp-wrap right" style="width:210px;max-height:200px;">
+                <div class="cp-grid" style="grid-template-columns:repeat(5,1fr)"></div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
 
+      <!-- Giờ – Phút -->
       <div class="fg">
         <div class="time-row">
+
+          <!-- Giờ sinh picker -->
           <div class="sel-grp">
             <label class="fg-label">Giờ sinh</label>
-            <select id="f-hour" class="f-input"></select>
+            <div class="c-picker" id="picker-hour">
+              <div class="cp-disp" onclick="togglePicker('picker-hour')">
+                <span class="cp-val">11h</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="cp-wrap" style="width:210px;">
+                <div class="cp-grid" style="grid-template-columns:repeat(6,1fr)"></div>
+              </div>
+            </div>
           </div>
+
+          <!-- Phút sinh picker -->
           <div class="sel-grp">
             <label class="fg-label">Phút sinh</label>
-            <select id="f-min" class="f-input"></select>
+            <div class="c-picker" id="picker-min">
+              <div class="cp-disp" onclick="togglePicker('picker-min')">
+                <span class="cp-val">30</span>
+                <span class="arrow">▼</span>
+              </div>
+              <div class="cp-wrap right" style="width:210px;max-height:180px;">
+                <div class="cp-grid" style="grid-template-columns:repeat(6,1fr)"></div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
 
+      <!-- Năm xem hạn -->
       <div class="fg">
         <div class="sec-label">NĂM XEM HẠN</div>
-        <select id="f-viewyear" class="f-input"></select>
+        <div class="c-picker" id="picker-viewyear">
+          <div class="cp-disp" onclick="togglePicker('picker-viewyear')">
+            <span class="cp-val">2026</span>
+            <span class="arrow">▼</span>
+          </div>
+          <div class="cp-wrap" style="width:195px;">
+            <div class="cp-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+          </div>
+        </div>
       </div>
 
       <div class="chk-row">
@@ -248,7 +342,9 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
   </div>
 </div>
 
-<!-- ══ PAGE 2: RESULT ══ -->
+<!-- ══════════════════════════════════════
+     PAGE 2 – KẾT QUẢ LÁ SỐ
+══════════════════════════════════════ -->
 <div id="pg-result" class="page">
   <header>
     <div class="logo" onclick="showForm()">
@@ -257,18 +353,27 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
     </div>
     <nav>
       <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
-      <a href="#">📂 Quản Lý Lá Số</a>
+      <a href="#" onclick="showManage();return false;">📂 Quản Lý Lá Số</a>
     </nav>
   </header>
 
   <div class="result-wrap">
+    <!-- SIDEBAR -->
     <div class="sidebar">
       <div class="sb-btns">
-        <button class="sb-btn">⬇ Tải xuống</button>
-        <button class="sb-btn">💾 Lưu</button>
-        <button class="sb-btn">↗ Chia sẻ</button>
-        <button class="sb-btn" onclick="showForm()">✏ Sửa</button>
+        <button class="sb-btn" onclick="downloadPNG()">⬇ Tải xuống</button>
+        <button class="sb-btn" onclick="saveLS()">💾 Lưu</button>
+        <div class="sb-share-wrap">
+          <button class="sb-btn" onclick="toggleShare(event)">↗ Chia sẻ</button>
+          <div id="share-popup" class="share-popup">
+            <button class="share-btn" onclick="shareFB()">📘 Facebook</button>
+            <button class="share-btn" onclick="shareIG()">📸 Instagram</button>
+            <button class="share-btn" onclick="shareTT()">🎵 TikTok</button>
+          </div>
+        </div>
+        <button class="sb-btn" onclick="openEditModal()">✏ Sửa</button>
       </div>
+
       <div class="sb-title">Tùy chọn hiển thị</div>
       <div class="chk-item"><input type="checkbox" id="cb1" checked onchange="toggleGroup(this,'thienhinh')"><label for="cb1">Thiên Hình</label></div>
       <div class="chk-item"><input type="checkbox" id="cb2" checked onchange="toggleGroup(this,'phutinh')"><label for="cb2">Các phụ tinh</label></div>
@@ -284,10 +389,11 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
       </div>
     </div>
 
+    <!-- BOARD 12 CUNG -->
     <div class="board-outer">
-      <div class="board">
+      <div class="board" id="laso-board">
 
-        <!-- 1. K.Tị – NÔ BỘC -->
+        <!-- 1 – K.Tị – NÔ BỘC -->
         <div class="house">
           <div class="h-top"><span class="h-chi">K.Tị</span><span class="h-name">NÔ BỘC</span><span class="h-num">52</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">52</div>
@@ -305,7 +411,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Tử<br>Tháng 12</div>
         </div>
 
-        <!-- 2. C.Ngọ – THIÊN DI -->
+        <!-- 2 – C.Ngọ – THIÊN DI -->
         <div class="house">
           <div class="h-top"><span class="h-chi">C.Ngọ</span><span class="h-name">THIÊN DI</span><span class="h-num">62</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">62</div>
@@ -323,7 +429,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Tuyệt<br>Tháng 1</div>
         </div>
 
-        <!-- 3. T.Mùi – TẬT ÁCH -->
+        <!-- 3 – T.Mùi – TẬT ÁCH -->
         <div class="house">
           <div class="h-top"><span class="h-chi">T.Mùi</span><span class="h-name">TẬT ÁCH</span><span class="h-num">72</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">72</div>
@@ -339,7 +445,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Dưỡng<br>Tháng 2</div>
         </div>
 
-        <!-- 4. N.Thân – TÀI BẠCH -->
+        <!-- 4 – N.Thân – TÀI BẠCH -->
         <div class="house">
           <div class="h-top"><span class="h-chi">N.Thân</span><span class="h-name">TÀI BẠCH</span><span class="h-num">82</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">82</div>
@@ -356,7 +462,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Trường Sinh<br>Tháng 3</div>
         </div>
 
-        <!-- 5. M.Thìn – QUAN LỘC -->
+        <!-- 5 – M.Thìn – QUAN LỘC -->
         <div class="house">
           <div class="h-top"><span class="h-chi">M.Thìn</span><span class="h-name">QUAN LỘC</span><span class="h-num">42</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">42</div>
@@ -383,12 +489,12 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="c-grid">
             <span class="cl">Họ tên:</span><span class="cv" id="cp-name" style="grid-column:span 3">—</span>
             <span class="cl">Năm:</span><span class="cv" id="cp-year">—</span>
-            <span class="cl">Can:</span><span class="cv red" id="cp-year-cc">—</span>
+            <span class="cl">Can Chi:</span><span class="cv red" id="cp-year-cc">—</span>
             <span class="cl">Tháng:</span><span class="cv" id="cp-month">—</span>
-            <span class="cl">Can:</span><span class="cv" id="cp-month-cc">—</span>
+            <span class="cl">Chi:</span><span class="cv" id="cp-month-cc">—</span>
             <span class="cl">Ngày:</span><span class="cv" id="cp-day">—</span>
             <span class="cl">Giờ:</span><span class="cv" id="cp-hour">—</span>
-            <span class="cl">Can:</span><span class="cv" id="cp-hour-cc">—</span>
+            <span class="cl">Chi:</span><span class="cv" id="cp-hour-cc">—</span>
             <span class="cl">Năm xem:</span><span class="cv red" id="cp-viewyear">—</span>
             <span class="cl">Can:</span><span class="cv red" id="cp-viewyear-cc">—</span>
           </div>
@@ -406,7 +512,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <p class="c-clink">Tham gia <a href="#" style="color:#c62828;font-weight:700">nhóm Tử Vi Trường Nguyễn</a><br>để được luận giải chi tiết, miễn phí</p>
         </div>
 
-        <!-- 7. Q.Dậu – TỬ TỨC -->
+        <!-- 7 – Q.Dậu – TỬ TỨC -->
         <div class="house">
           <div class="h-top"><span class="h-chi">Q.Dậu</span><span class="h-name">TỬ TỨC</span><span class="h-num">92</span></div>
           <div class="tvan-badge tvan-tuan">Tuần</div>
@@ -423,7 +529,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Mộc Dục<br>Tháng 5</div>
         </div>
 
-        <!-- 8. B.Mão – ĐIỀN TRẠCH -->
+        <!-- 8 – B.Mão – ĐIỀN TRẠCH -->
         <div class="house">
           <div class="h-top"><span class="h-chi">B.Mão</span><span class="h-name">ĐIỀN TRẠCH</span><span class="h-num">32</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">32</div>
@@ -438,7 +544,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Tử<br>Tháng 10</div>
         </div>
 
-        <!-- 9. G.Tuất – PHU THÊ -->
+        <!-- 9 – G.Tuất – PHU THÊ -->
         <div class="house">
           <div class="h-top"><span class="h-chi">G.Tuất</span><span class="h-name">PHU THÊ</span><span class="h-num">102</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">102</div>
@@ -453,7 +559,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Quan Đới<br>Tháng 4</div>
         </div>
 
-        <!-- 10. B.Dần – PHÚC ĐỨC -->
+        <!-- 10 – B.Dần – PHÚC ĐỨC -->
         <div class="house">
           <div class="h-top"><span class="h-chi">B.Dần</span><span class="h-name">PHÚC ĐỨC</span><span class="h-num">22</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">22</div>
@@ -468,7 +574,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Suy<br>Tháng 9</div>
         </div>
 
-        <!-- 11. D.Sửu – PHỤ MẪU -->
+        <!-- 11 – D.Sửu – PHỤ MẪU -->
         <div class="house">
           <div class="h-top"><span class="h-chi">D.Sửu</span><span class="h-name">PHỤ MẪU</span><span class="h-num">12</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">12</div>
@@ -485,7 +591,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Bệnh<br>Tháng 9</div>
         </div>
 
-        <!-- 12. B.Tý – MỆNH (THÂN) -->
+        <!-- 12 – B.Tý – MỆNH (THÂN) -->
         <div class="house">
           <div class="h-top"><span class="h-chi">B.Tý</span><span class="h-name">MỆNH <span class="than-lbl">THÂN</span></span><span class="h-num">2</span></div>
           <div class="tvan-badge tvan-menh grp-cungtv">2</div>
@@ -501,7 +607,7 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Đế Vượng<br>Tháng 7</div>
         </div>
 
-        <!-- 13. A.Hợi – HUYNH ĐỆ -->
+        <!-- 13 – A.Hợi – HUYNH ĐỆ -->
         <div class="house">
           <div class="h-top"><span class="h-chi">A.Hợi</span><span class="h-name">HUYNH ĐỆ</span><span class="h-num">112</span></div>
           <div class="tvan-badge tvan-default grp-cungtv">112</div>
@@ -516,13 +622,105 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
           <div class="h-foot">Lâm Quan<br>Tháng 6</div>
         </div>
 
-      </div>
+      </div><!-- .board -->
+    </div><!-- .board-outer -->
+  </div><!-- .result-wrap -->
+</div><!-- #pg-result -->
+
+<!-- ══════════════════════════════════════
+     PAGE 3 – QUẢN LÝ LÁ SỐ
+══════════════════════════════════════ -->
+<div id="pg-manage" class="page">
+  <header>
+    <div class="logo" onclick="showForm()">
+      <div class="logo-icon">✦</div>
+      <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
+    <nav>
+      <a href="#" onclick="showForm();return false;">📋 Lấy Lá Số</a>
+      <a href="#" onclick="showManage();return false;">📂 Quản Lý Lá Số</a>
+    </nav>
+  </header>
+  <div class="manage-wrap">
+    <h2>📂 Quản lý lá số</h2>
+    <p class="manage-sub">Các lá số đã lưu – nhấn Xem để mở lại, Xóa để xóa khỏi danh sách.</p>
+    <div id="saved-list"></div>
   </div>
 </div>
 
+<!-- ══════════════════════════════════════
+     EDIT MODAL – Sửa thông tin lá số
+══════════════════════════════════════ -->
+<div id="modal-edit" class="modal-overlay" onclick="onOverlayClick(event)">
+  <div class="modal-box">
+    <div class="modal-title">
+      ✏ Sửa thông tin lá số
+      <button class="modal-close" onclick="closeModal('modal-edit')">✕</button>
+    </div>
+
+    <div class="fg">
+      <label class="fg-label">Họ tên</label>
+      <input id="me-name" class="f-input" type="text" placeholder="Nhập họ và tên...">
+    </div>
+
+    <div class="fg">
+      <div class="gender-row">
+        <button class="g-btn active" id="me-g-nam" onclick="setModalGender('nam')">Nam ✓</button>
+        <button class="g-btn" id="me-g-nu" onclick="setModalGender('nu')">Nữ</button>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fg-label" style="margin-bottom:8px">NGÀY / THÁNG / NĂM SINH</label>
+      <div class="m-date-row">
+        <div>
+          <label class="fg-label">Ngày</label>
+          <input id="me-day" class="f-input" type="number" min="1" max="31" placeholder="1-31">
+        </div>
+        <div>
+          <label class="fg-label">Tháng</label>
+          <input id="me-month" class="f-input" type="number" min="1" max="12" placeholder="1-12">
+        </div>
+        <div>
+          <label class="fg-label">Năm</label>
+          <input id="me-year" class="f-input" type="number" min="1900" max="2024" placeholder="1900-2024">
+        </div>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fg-label" style="margin-bottom:8px">GIỜ / PHÚT SINH</label>
+      <div class="m-time-row">
+        <div>
+          <label class="fg-label">Giờ (0-23)</label>
+          <input id="me-hour" class="f-input" type="number" min="0" max="23" placeholder="0-23">
+        </div>
+        <div>
+          <label class="fg-label">Phút (0-59)</label>
+          <input id="me-min" class="f-input" type="number" min="0" max="59" placeholder="0-59">
+        </div>
+      </div>
+    </div>
+
+    <div class="fg">
+      <label class="fg-label">Năm xem hạn</label>
+      <input id="me-viewyear" class="f-input" type="number" min="2020" max="2040" placeholder="2020-2040">
+    </div>
+
+    <button class="btn-submit" onclick="applyEdit()">✓ Cập nhật lá số</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<!-- ══════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════ -->
 <script>
-/* ── Starfield ── */
+/* ────────────────────────────────────
+   STARFIELD
+──────────────────────────────────── */
 (function(){
   const bg=document.getElementById('stars-bg');
   for(let i=0;i<160;i++){
@@ -538,79 +736,201 @@ body.show-cungdv .grp-cungdv{display:inline!important;}
   }
 })();
 
-/* ── Dropdowns (Month, Year, Hour, Min, ViewYear) ── */
-function fill(id,from,to,fmt,def){
-  const el=document.getElementById(id);
-  for(let i=from;i<=to;i++){
-    const o=document.createElement('option');
-    o.value=i;o.textContent=fmt?fmt(i):i;
-    if(i===def)o.selected=true;
-    el.appendChild(o);
+/* ────────────────────────────────────
+   PICKER STATE
+──────────────────────────────────── */
+let selectedDay      = 15;
+let selectedMonth    = 6;
+let selectedYear     = 1984;
+let selectedHour     = 11;
+let selectedMin      = 30;
+let selectedViewYear = 2026;
+let curGender        = 'nam';
+let curCal           = 'dl';
+let currentLS        = null;  // lá số hiện tại (để Lưu)
+let modalGender      = 'nam';
+
+/* ────────────────────────────────────
+   GENERIC CUSTOM PICKER
+──────────────────────────────────── */
+function buildPicker(containerId, items, defVal, onSelect) {
+  const container = document.getElementById(containerId);
+  const disp  = container.querySelector('.cp-disp');
+  const wrap  = container.querySelector('.cp-wrap');
+  const grid  = container.querySelector('.cp-grid');
+
+  // Set initial display label
+  const defItem = items.find(i => i.value === defVal);
+  if (defItem) disp.querySelector('.cp-val').textContent = defItem.dispLabel || defItem.label;
+
+  // Build cells
+  items.forEach(item => {
+    const cell = document.createElement('div');
+    cell.className = 'cp-cell' + (item.value === defVal ? ' selected' : '');
+    cell.textContent = item.label;
+    cell.dataset.val = item.value;
+    cell.addEventListener('click', function(e) {
+      e.stopPropagation();
+      grid.querySelectorAll('.cp-cell').forEach(c => c.classList.remove('selected'));
+      cell.classList.add('selected');
+      disp.querySelector('.cp-val').textContent = item.dispLabel || item.label;
+      closeAllPickers();
+      onSelect(item.value);
+    });
+    grid.appendChild(cell);
+  });
+
+  // Toggle open/close
+  disp.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isOpen = wrap.classList.contains('open');
+    closeAllPickers();
+    if (!isOpen) {
+      wrap.classList.add('open');
+      disp.classList.add('open');
+      // Scroll selected cell into view
+      const sel = grid.querySelector('.cp-cell.selected');
+      if (sel) setTimeout(() => sel.scrollIntoView({block:'nearest', behavior:'instant'}), 20);
+    }
+  });
+}
+
+function closeAllPickers() {
+  document.querySelectorAll('.cp-wrap.open').forEach(w => w.classList.remove('open'));
+  document.querySelectorAll('.cp-disp.open').forEach(d => d.classList.remove('open'));
+}
+
+// Also expose togglePicker for inline onclick (day picker uses it too)
+function togglePicker(containerId) {
+  const container = document.getElementById(containerId);
+  const disp = container.querySelector('.cp-disp');
+  const wrap = container.querySelector('.cp-wrap');
+  const isOpen = wrap.classList.contains('open');
+  closeAllPickers();
+  if (!isOpen) {
+    wrap.classList.add('open');
+    disp.classList.add('open');
+    const sel = container.querySelector('.cp-cell.selected');
+    if (sel) setTimeout(() => sel.scrollIntoView({block:'nearest', behavior:'instant'}), 20);
   }
 }
-fill('f-month',1,12,null,6);
-fill('f-year',1900,2024,null,1984);
-fill('f-hour',0,23,h=>h<10?'0'+h:h,11);
-fill('f-min',0,59,m=>m<10?'0'+m:m,30);
-fill('f-viewyear',2020,2040,null,2026);
 
-/* ── Custom Day Picker ── */
-let selectedDay = 15;
+// Update picker display + selected cell from JS (used by applyEdit / viewLS)
+function updatePicker(containerId, val, dispLabel) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.querySelector('.cp-val').textContent = dispLabel !== undefined ? dispLabel : val;
+  container.querySelectorAll('.cp-cell').forEach(c => {
+    c.classList.toggle('selected', c.dataset.val == val);
+  });
+}
 
-(function buildDayGrid(){
+// Close pickers on outside click
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.c-picker')) closeAllPickers();
+  if (!e.target.closest('.sb-share-wrap')) {
+    document.getElementById('share-popup').classList.remove('open');
+  }
+});
+
+/* ────────────────────────────────────
+   BUILD ALL PICKERS
+──────────────────────────────────── */
+
+// ── DAY picker (7 columns grid, 1–31)
+(function(){
   const grid = document.getElementById('day-grid');
-  for(let d=1;d<=31;d++){
+  for (let d = 1; d <= 31; d++) {
     const cell = document.createElement('div');
-    cell.className = 'day-cell' + (d===15?' selected':'');
+    cell.className = 'cp-cell' + (d === selectedDay ? ' selected' : '');
     cell.textContent = d;
-    cell.dataset.day = d;
-    cell.onclick = function(){ selectDay(d); };
+    cell.dataset.val = d;
+    cell.addEventListener('click', function(e) {
+      e.stopPropagation();
+      selectedDay = d;
+      document.getElementById('day-value').textContent = d;
+      grid.querySelectorAll('.cp-cell').forEach(c => c.classList.remove('selected'));
+      cell.classList.add('selected');
+      closeAllPickers();
+    });
     grid.appendChild(cell);
   }
 })();
 
-function selectDay(d){
-  selectedDay = d;
-  document.getElementById('day-value').textContent = d;
-  document.querySelectorAll('.day-cell').forEach(c=>{
-    c.classList.toggle('selected', parseInt(c.dataset.day)===d);
-  });
-  closeDayPicker();
+// ── MONTH picker (3 columns, Tháng 1–12)
+buildPicker('picker-month',
+  Array.from({length:12}, (_,i) => ({
+    value: i+1,
+    label: 'Th.' + (i+1),
+    dispLabel: 'Tháng ' + (i+1)
+  })),
+  selectedMonth,
+  v => { selectedMonth = v; }
+);
+
+// ── YEAR picker (5 columns, 1900–2024, right-aligned wrap)
+buildPicker('picker-year',
+  Array.from({length:125}, (_,i) => ({
+    value: 1900+i,
+    label: String(1900+i)
+  })),
+  selectedYear,
+  v => { selectedYear = v; }
+);
+
+// ── HOUR picker (6 columns, 00–23)
+buildPicker('picker-hour',
+  Array.from({length:24}, (_,i) => ({
+    value: i,
+    label: String(i).padStart(2,'0'),
+    dispLabel: String(i).padStart(2,'0') + 'h'
+  })),
+  selectedHour,
+  v => { selectedHour = v; }
+);
+
+// ── MINUTE picker (6 columns, 00–59, right-aligned wrap)
+buildPicker('picker-min',
+  Array.from({length:60}, (_,i) => ({
+    value: i,
+    label: String(i).padStart(2,'0')
+  })),
+  selectedMin,
+  v => { selectedMin = v; }
+);
+
+// ── VIEW YEAR picker (3 columns, 2020–2040)
+buildPicker('picker-viewyear',
+  Array.from({length:21}, (_,i) => ({
+    value: 2020+i,
+    label: String(2020+i)
+  })),
+  selectedViewYear,
+  v => { selectedViewYear = v; }
+);
+
+/* ────────────────────────────────────
+   GENDER / CALENDAR
+──────────────────────────────────── */
+function setGender(g) {
+  curGender = g;
+  document.getElementById('g-nam').className = 'g-btn' + (g==='nam'?' active':'');
+  document.getElementById('g-nu').className  = 'g-btn' + (g==='nu' ?' active':'');
+  document.getElementById('g-nam').textContent = g==='nam' ? 'Nam ✓' : 'Nam';
+  document.getElementById('g-nu').textContent  = g==='nu'  ? 'Nữ ✓'  : 'Nữ';
+}
+function setCal(c) {
+  curCal = c;
+  document.getElementById('cal-dl').className = 'cal-btn' + (c==='dl'?' active':'');
+  document.getElementById('cal-al').className = 'cal-btn' + (c==='al'?' active':'');
 }
 
-function toggleDayPicker(){
-  const wrap = document.getElementById('day-grid-wrap');
-  const disp = document.getElementById('day-display');
-  const isOpen = wrap.classList.contains('open');
-  if(isOpen){ closeDayPicker(); } else { wrap.classList.add('open'); disp.classList.add('open'); }
-}
-function closeDayPicker(){
-  document.getElementById('day-grid-wrap').classList.remove('open');
-  document.getElementById('day-display').classList.remove('open');
-}
-// Close on outside click
-document.addEventListener('click', function(e){
-  if(!document.getElementById('day-picker').contains(e.target)) closeDayPicker();
-});
-
-/* ── Gender / Calendar ── */
-let curGender='nam';
-function setGender(g){
-  curGender=g;
-  document.getElementById('g-nam').className='g-btn'+(g==='nam'?' active':'');
-  document.getElementById('g-nu').className='g-btn'+(g==='nu'?' active':'');
-  document.getElementById('g-nam').textContent=g==='nam'?'Nam ✓':'Nam';
-  document.getElementById('g-nu').textContent=g==='nu'?'Nữ ✓':'Nữ';
-}
-function setCal(c){
-  document.getElementById('cal-dl').className='cal-btn'+(c==='dl'?' active':'');
-  document.getElementById('cal-al').className='cal-btn'+(c==='al'?' active':'');
-}
-
-/* ── Can Chi Calculations ── */
+/* ────────────────────────────────────
+   CAN CHI CALCULATIONS
+──────────────────────────────────── */
 const CAN  = ['Canh','Tân','Nhâm','Quý','Giáp','Ất','Bính','Đinh','Mậu','Kỷ'];
 const CHI  = ['Thân','Dậu','Tuất','Hợi','Tý','Sửu','Dần','Mão','Thìn','Tị','Ngọ','Mùi'];
-const CHI_GIO = ['Tý','Sửu','Dần','Mão','Thìn','Tị','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const CHI_GIO   = ['Tý','Sửu','Dần','Mão','Thìn','Tị','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
 const THANG_CHI = ['Dần','Mão','Thìn','Tị','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi','Tý','Sửu'];
 
 const MENH_NAPAM = [
@@ -622,30 +942,16 @@ const MENH_NAPAM = [
   'Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy'
 ];
 
-function getCanChi(y){ return CAN[y%10]+' '+CHI[y%12]; }
-
-function getMenh(y){
-  const idx = Math.floor(((y-1924)%60+60)%60/2);
-  return MENH_NAPAM[idx];
-}
-
-function getGioCC(h){
-  // 2 hours per chi, starting Tý at 23:00–01:00
-  const chiIdx = Math.floor(((h+1)%24)/2);
-  return CHI_GIO[chiIdx];
-}
-
-function getThangCC(m){
-  return THANG_CHI[m-1];
-}
-
+function getCanChi(y){ return CAN[y%10] + ' ' + CHI[y%12]; }
+function getMenh(y){ return MENH_NAPAM[Math.floor(((y-1924)%60+60)%60/2)]; }
+function getGioCC(h){ return CHI_GIO[Math.floor(((h+1)%24)/2)]; }
+function getThangCC(m){ return THANG_CHI[m-1]; }
 function getAmDuong(y, gender){
-  const isDuong = y%2===0; // even year = Dương
-  if(gender==='nam') return isDuong?'Dương Nam':'Âm Nam';
-  return isDuong?'Âm Nữ':'Dương Nữ';
+  const isDuong = y%2===0;
+  if(gender==='nam') return isDuong ? 'Dương Nam' : 'Âm Nam';
+  return isDuong ? 'Âm Nữ' : 'Dương Nữ';
 }
 
-// Simplified Cục & Chủ mệnh/thân (placeholder based on mệnh element)
 const MENH_TO_CUC = {
   'Kim':'Kim Tứ Cục','Hỏa':'Hỏa Lục Cục','Mộc':'Mộc Tam Cục',
   'Thủy':'Thủy Nhị Cục','Thổ':'Thổ Ngũ Cục'
@@ -653,40 +959,35 @@ const MENH_TO_CUC = {
 const CHU_MENH_LIST = ['Tham Lang','Cự Môn','Lộc Tồn','Văn Khúc','Liêm Trinh','Vũ Khúc','Phá Quân','Tả Phù','Hữu Bật','Thiên Cơ'];
 const CHU_THAN_LIST = ['Hỏa Tinh','Thiên Tướng','Thiên Đồng','Văn Xương','Vũ Khúc','Thiên Lương'];
 
-/* ── Submit Form & Populate Center Panel ── */
-function submitForm(){
-  const name     = document.getElementById('f-name').value.trim() || '(Chưa nhập)';
-  const month    = parseInt(document.getElementById('f-month').value);
-  const year     = parseInt(document.getElementById('f-year').value);
-  const hour     = parseInt(document.getElementById('f-hour').value);
-  const min      = parseInt(document.getElementById('f-min').value);
-  const viewYear = parseInt(document.getElementById('f-viewyear').value);
+/* ────────────────────────────────────
+   SUBMIT FORM → POPULATE CENTER PANEL
+──────────────────────────────────── */
+function submitForm() {
+  const name = document.getElementById('f-name').value.trim() || '(Chưa nhập)';
 
-  const yearCC     = getCanChi(year);
-  const viewYearCC = getCanChi(viewYear);
-  const menh       = getMenh(year);
-  const menhEl     = menh.split(' ').pop(); // last word = element
+  const yearCC     = getCanChi(selectedYear);
+  const viewYearCC = getCanChi(selectedViewYear);
+  const menh       = getMenh(selectedYear);
+  const menhEl     = menh.split(' ').pop();
   const cuc        = MENH_TO_CUC[menhEl] || 'Thủy Nhị Cục';
-  const amduong    = getAmDuong(year, curGender);
-  const tuoi       = viewYear - year + 1;
-  const thangCC    = getThangCC(month);
-  const gioCC      = getGioCC(hour);
-  const minStr     = min<10?'0'+min:min;
-
-  // Deterministic but varied chủ mệnh/thân based on year+hour
-  const chuMenh = CHU_MENH_LIST[(year + hour) % CHU_MENH_LIST.length];
-  const chuThan  = CHU_THAN_LIST[(year + month) % CHU_THAN_LIST.length];
+  const amduong    = getAmDuong(selectedYear, curGender);
+  const tuoi       = selectedViewYear - selectedYear + 1;
+  const thangCC    = getThangCC(selectedMonth);
+  const gioCC      = getGioCC(selectedHour);
+  const minStr     = String(selectedMin).padStart(2,'0');
+  const chuMenh    = CHU_MENH_LIST[(selectedYear + selectedHour) % CHU_MENH_LIST.length];
+  const chuThan    = CHU_THAN_LIST[(selectedYear + selectedMonth) % CHU_THAN_LIST.length];
 
   // Populate center panel
   document.getElementById('cp-name').textContent     = name;
-  document.getElementById('cp-year').textContent     = year;
+  document.getElementById('cp-year').textContent     = selectedYear;
   document.getElementById('cp-year-cc').textContent  = yearCC;
-  document.getElementById('cp-month').textContent    = month;
+  document.getElementById('cp-month').textContent    = selectedMonth;
   document.getElementById('cp-month-cc').textContent = thangCC;
   document.getElementById('cp-day').textContent      = selectedDay;
-  document.getElementById('cp-hour').textContent     = `${hour} giờ ${minStr} phút`;
+  document.getElementById('cp-hour').textContent     = `${selectedHour} giờ ${minStr} phút`;
   document.getElementById('cp-hour-cc').textContent  = gioCC;
-  document.getElementById('cp-viewyear').textContent = viewYear;
+  document.getElementById('cp-viewyear').textContent = selectedViewYear;
   document.getElementById('cp-viewyear-cc').textContent = viewYearCC;
   document.getElementById('cp-age').textContent      = tuoi + ' tuổi';
   document.getElementById('cp-amduong').textContent  = amduong;
@@ -697,35 +998,272 @@ function submitForm(){
 
   // Tags
   const tags = [];
-  if(amduong.includes('Dương')&&curGender==='nam') tags.push('✦ Âm Dương thuận lý');
-  if(amduong.includes('Âm')&&curGender==='nu')     tags.push('✦ Âm Dương thuận lý');
-  tags.push('✦ Mệnh '+menhEl+' sinh Cục');
-  if(hour>=11&&hour<=13) tags.push('✦ Thân Mệnh đồng cung');
-  document.getElementById('cp-tags').innerHTML = tags.map(t=>`<span class="c-tag">${t}</span>`).join('');
+  if (amduong.includes('Dương') && curGender==='nam') tags.push('✦ Âm Dương thuận lý');
+  if (amduong.includes('Âm')    && curGender==='nu')  tags.push('✦ Âm Dương thuận lý');
+  tags.push('✦ Mệnh ' + menhEl + ' sinh Cục');
+  if (selectedHour >= 11 && selectedHour <= 13) tags.push('✦ Thân Mệnh đồng cung');
+  document.getElementById('cp-tags').innerHTML = tags.map(t => `<span class="c-tag">${t}</span>`).join('');
+
+  // Save current state for Lưu button
+  currentLS = {
+    name, gender: curGender, cal: curCal,
+    day: selectedDay, month: selectedMonth, year: selectedYear,
+    hour: selectedHour, min: selectedMin, viewYear: selectedViewYear
+  };
 
   showResult();
 }
 
-/* ── Page Switch ── */
-function showResult(){
-  document.getElementById('pg-form').classList.remove('active');
+/* ────────────────────────────────────
+   PAGE NAVIGATION
+──────────────────────────────────── */
+function showResult() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('pg-result').classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
 }
-function showForm(){
-  document.getElementById('pg-result').classList.remove('active');
+function showForm() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('pg-form').classList.add('active');
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
+}
+function showManage() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('pg-manage').classList.add('active');
+  renderManage();
+  window.scrollTo(0, 0);
 }
 
-/* ── Display Group Toggle ── */
-function toggleGroup(cb,group){
-  const defaultOn=['thienhinh','phutinh','luuloc','luunien'];
-  if(defaultOn.includes(group)){
-    document.body.classList.toggle('hide-'+group,!cb.checked);
+/* ────────────────────────────────────
+   DISPLAY GROUP TOGGLE (SIDEBAR CHECKBOXES)
+──────────────────────────────────── */
+function toggleGroup(cb, group) {
+  const defaultOn = ['thienhinh','phutinh','luuloc','luunien'];
+  if (defaultOn.includes(group)) {
+    document.body.classList.toggle('hide-'+group, !cb.checked);
   } else {
-    document.body.classList.toggle('show-'+group,cb.checked);
+    document.body.classList.toggle('show-'+group, cb.checked);
   }
+}
+
+/* ────────────────────────────────────
+   DOWNLOAD AS PNG (html2canvas)
+──────────────────────────────────── */
+function downloadPNG() {
+  const board = document.getElementById('laso-board');
+  if (!board) { showToast('Không tìm thấy lá số!'); return; }
+  showToast('⏳ Đang tạo ảnh PNG...');
+  html2canvas(board, {
+    backgroundColor: '#101828',
+    scale: 2,
+    logging: false,
+    useCORS: true
+  }).then(canvas => {
+    const name = (document.getElementById('cp-name').textContent || 'laso').replace(/[^a-z0-9]/gi,'_');
+    const link = document.createElement('a');
+    link.download = 'laso-tuvi-' + name + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showToast('✓ Đã tải xuống ảnh PNG!');
+  }).catch(() => showToast('Lỗi tạo ảnh, thử lại nhé!'));
+}
+
+/* ────────────────────────────────────
+   SHARE
+──────────────────────────────────── */
+function toggleShare(e) {
+  e.stopPropagation();
+  document.getElementById('share-popup').classList.toggle('open');
+}
+function shareFB() {
+  const url = encodeURIComponent(window.location.href);
+  window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+  document.getElementById('share-popup').classList.remove('open');
+}
+function shareIG() {
+  copyURL();
+  showToast('📋 Đã copy link! Paste vào bio Instagram để chia sẻ');
+  document.getElementById('share-popup').classList.remove('open');
+}
+function shareTT() {
+  copyURL();
+  showToast('📋 Đã copy link! Paste vào TikTok để chia sẻ');
+  document.getElementById('share-popup').classList.remove('open');
+}
+function copyURL() {
+  const url = window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).catch(() => fallbackCopy(url));
+  } else {
+    fallbackCopy(url);
+  }
+}
+function fallbackCopy(text) {
+  const el = document.createElement('textarea');
+  el.value = text; el.style.opacity = '0';
+  document.body.appendChild(el); el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+}
+
+/* ────────────────────────────────────
+   LƯU LÁ SỐ (localStorage)
+──────────────────────────────────── */
+function saveLS() {
+  if (!currentLS) { showToast('⚠ Chưa có lá số để lưu!'); return; }
+  const saved = JSON.parse(localStorage.getItem('tuvi_saved') || '[]');
+  const entry = Object.assign({}, currentLS, {
+    id: Date.now(),
+    savedAt: new Date().toLocaleDateString('vi-VN')
+  });
+  saved.unshift(entry);
+  localStorage.setItem('tuvi_saved', JSON.stringify(saved));
+  showToast('✓ Đã lưu lá số của ' + currentLS.name);
+}
+
+function renderManage() {
+  const saved = JSON.parse(localStorage.getItem('tuvi_saved') || '[]');
+  const container = document.getElementById('saved-list');
+  if (saved.length === 0) {
+    container.innerHTML = '<div class="manage-empty">📭 Chưa có lá số nào được lưu.<br>Nhấn <b>Lưu</b> sau khi xem lá số để thêm vào đây.</div>';
+    return;
+  }
+  container.innerHTML = saved.map((ls, i) => `
+    <div class="ls-card">
+      <div class="ls-info">
+        <div class="ls-name">${ls.name}</div>
+        <div class="ls-meta">
+          ${ls.gender==='nam'?'Nam':'Nữ'} &bull;
+          Ngày ${ls.day}/${ls.month}/${ls.year} &bull;
+          ${String(ls.hour).padStart(2,'0')}:${String(ls.min).padStart(2,'0')} &bull;
+          Lưu: ${ls.savedAt}
+        </div>
+      </div>
+      <div class="ls-actions">
+        <button class="ls-btn" onclick="viewLS(${i})">👁 Xem</button>
+        <button class="ls-btn del" onclick="deleteLS(${i})">🗑 Xóa</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewLS(idx) {
+  const saved = JSON.parse(localStorage.getItem('tuvi_saved') || '[]');
+  const ls = saved[idx];
+  if (!ls) return;
+
+  document.getElementById('f-name').value = ls.name;
+  setGender(ls.gender || 'nam');
+  if (ls.cal) setCal(ls.cal);
+
+  selectedDay      = ls.day;
+  selectedMonth    = ls.month;
+  selectedYear     = ls.year;
+  selectedHour     = ls.hour;
+  selectedMin      = ls.min;
+  selectedViewYear = ls.viewYear;
+
+  // Update all picker displays
+  document.getElementById('day-value').textContent = selectedDay;
+  document.querySelectorAll('#day-grid .cp-cell').forEach(c => {
+    c.classList.toggle('selected', parseInt(c.dataset.val) === selectedDay);
+  });
+  updatePicker('picker-month',    selectedMonth,    'Tháng ' + selectedMonth);
+  updatePicker('picker-year',     selectedYear,     String(selectedYear));
+  updatePicker('picker-hour',     selectedHour,     String(selectedHour).padStart(2,'0') + 'h');
+  updatePicker('picker-min',      selectedMin,      String(selectedMin).padStart(2,'0'));
+  updatePicker('picker-viewyear', selectedViewYear, String(selectedViewYear));
+
+  submitForm();
+}
+
+function deleteLS(idx) {
+  const saved = JSON.parse(localStorage.getItem('tuvi_saved') || '[]');
+  const name = saved[idx] ? saved[idx].name : '';
+  saved.splice(idx, 1);
+  localStorage.setItem('tuvi_saved', JSON.stringify(saved));
+  renderManage();
+  showToast('🗑 Đã xóa lá số' + (name ? ' của ' + name : ''));
+}
+
+/* ────────────────────────────────────
+   EDIT MODAL
+──────────────────────────────────── */
+function openEditModal() {
+  document.getElementById('me-name').value     = document.getElementById('f-name').value;
+  document.getElementById('me-day').value      = selectedDay;
+  document.getElementById('me-month').value    = selectedMonth;
+  document.getElementById('me-year').value     = selectedYear;
+  document.getElementById('me-hour').value     = selectedHour;
+  document.getElementById('me-min').value      = selectedMin;
+  document.getElementById('me-viewyear').value = selectedViewYear;
+  modalGender = curGender;
+  document.getElementById('me-g-nam').className = 'g-btn' + (curGender==='nam'?' active':'');
+  document.getElementById('me-g-nu').className  = 'g-btn' + (curGender==='nu' ?' active':'');
+  document.getElementById('me-g-nam').textContent = curGender==='nam' ? 'Nam ✓' : 'Nam';
+  document.getElementById('me-g-nu').textContent  = curGender==='nu'  ? 'Nữ ✓'  : 'Nữ';
+  document.getElementById('modal-edit').classList.add('active');
+}
+
+function setModalGender(g) {
+  modalGender = g;
+  document.getElementById('me-g-nam').className = 'g-btn' + (g==='nam'?' active':'');
+  document.getElementById('me-g-nu').className  = 'g-btn' + (g==='nu' ?' active':'');
+  document.getElementById('me-g-nam').textContent = g==='nam' ? 'Nam ✓' : 'Nam';
+  document.getElementById('me-g-nu').textContent  = g==='nu'  ? 'Nữ ✓'  : 'Nữ';
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+function onOverlayClick(e) {
+  if (e.target === document.getElementById('modal-edit')) closeModal('modal-edit');
+}
+
+function applyEdit() {
+  const name  = document.getElementById('me-name').value.trim();
+  const d     = parseInt(document.getElementById('me-day').value);
+  const m     = parseInt(document.getElementById('me-month').value);
+  const y     = parseInt(document.getElementById('me-year').value);
+  const h     = parseInt(document.getElementById('me-hour').value);
+  const mn    = parseInt(document.getElementById('me-min').value);
+  const vy    = parseInt(document.getElementById('me-viewyear').value);
+
+  if (name) document.getElementById('f-name').value = name;
+  if (d >= 1  && d <= 31)   {
+    selectedDay = d;
+    document.getElementById('day-value').textContent = d;
+    document.querySelectorAll('#day-grid .cp-cell').forEach(c => {
+      c.classList.toggle('selected', parseInt(c.dataset.val) === d);
+    });
+  }
+  if (m >= 1  && m <= 12)   { selectedMonth    = m;  updatePicker('picker-month',    m,  'Tháng '+m); }
+  if (y >= 1900 && y <= 2024){ selectedYear     = y;  updatePicker('picker-year',     y,  String(y)); }
+  if (h >= 0  && h <= 23)   { selectedHour     = h;  updatePicker('picker-hour',     h,  String(h).padStart(2,'0')+'h'); }
+  if (mn >= 0 && mn <= 59)  { selectedMin      = mn; updatePicker('picker-min',      mn, String(mn).padStart(2,'0')); }
+  if (vy >= 2020 && vy <= 2040){ selectedViewYear = vy; updatePicker('picker-viewyear', vy, String(vy)); }
+
+  curGender = modalGender;
+  document.getElementById('g-nam').className = 'g-btn' + (curGender==='nam'?' active':'');
+  document.getElementById('g-nu').className  = 'g-btn' + (curGender==='nu' ?' active':'');
+  document.getElementById('g-nam').textContent = curGender==='nam' ? 'Nam ✓' : 'Nam';
+  document.getElementById('g-nu').textContent  = curGender==='nu'  ? 'Nữ ✓'  : 'Nữ';
+
+  closeModal('modal-edit');
+  submitForm();
+}
+
+/* ────────────────────────────────────
+   TOAST
+──────────────────────────────────── */
+let toastTimer = null;
+function showToast(msg, ms = 2800) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), ms);
 }
 </script>
 </body>
