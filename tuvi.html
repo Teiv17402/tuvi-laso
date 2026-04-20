@@ -13,13 +13,18 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;mi
 #stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) var(--delay,0s) infinite;}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:var(--op,.9)}}
-.shoot{position:absolute;width:2px;height:2px;background:linear-gradient(to right,transparent,#fff);border-radius:50%;animation:shoot 4s linear var(--sd,0s) infinite;opacity:0;}
-@keyframes shoot{0%{transform:translate(0,0) rotate(-35deg);opacity:1}100%{transform:translate(300px,150px) rotate(-35deg);opacity:0}}
+.shoot{position:absolute;pointer-events:none;opacity:0;}
+.shoot.flying{animation:shoot 2.4s linear forwards;}
+@keyframes shoot{
+  0%  {opacity:1;transform:translate(0,0) scaleX(1);}
+  80% {opacity:.6;}
+  100%{opacity:0;transform:translate(360px,180px) scaleX(1);}
+}
 
 /* Header */
 header{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:10px 28px;background:rgba(4,8,24,.85);border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);}
 .logo{display:flex;align-items:center;gap:10px;cursor:pointer;}
-.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,#4fc3f7,#f9a825);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;}
 .logo-text{font-weight:700;font-size:15px;color:#fff;letter-spacing:.5px;transition:color .2s;}
 .logo:hover .logo-text{color:#f9a825;}
 nav{display:flex;gap:22px;align-items:center;}
@@ -252,7 +257,8 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 @media(max-width:768px){
   /* ── Header ── */
   header{padding:8px 14px;}
-  .logo-icon{width:32px;height:32px;font-size:15px;}
+  .logo-icon{width:32px;height:32px;}
+  .logo-icon svg{width:32px;height:32px;}
   .logo-text{font-size:12.5px;}
   nav{gap:10px;}
   nav a{font-size:11.5px;gap:3px;}
@@ -376,7 +382,27 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 <div id="pg-form" class="page active">
   <header>
     <div class="logo" onclick="showForm()">
-      <div class="logo-icon">✦</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="19" cy="19" r="19" fill="url(#bgLg)"/>
+          <defs>
+            <linearGradient id="bgLg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4fc3f7"/>
+              <stop offset="100%" stop-color="#f9a825"/>
+            </linearGradient>
+          </defs>
+          <!-- Yin Yang -->
+          <path d="M19 10a9 9 0 0 1 0 18 4.5 4.5 0 0 1 0-9 4.5 4.5 0 0 0 0-9z" fill="#fff" opacity=".9"/>
+          <path d="M19 10a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z" fill="#1a1a2e" opacity=".7"/>
+          <circle cx="19" cy="14.5" r="1.8" fill="#1a1a2e" opacity=".7"/>
+          <circle cx="19" cy="23.5" r="1.8" fill="#fff" opacity=".9"/>
+          <!-- 8 trigram lines (3 per direction, tiny) -->
+          <!-- N --><line x1="16" y1="3" x2="19" y2="3" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="20" y1="3" x2="23" y2="3" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="16.5" y1="5" x2="22.5" y2="5" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- S --><line x1="16.5" y1="33" x2="22.5" y2="33" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="16" y1="35" x2="19" y2="35" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="20" y1="35" x2="23" y2="35" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- W --><line x1="3" y1="16.5" x2="3" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="5" y1="16" x2="5" y2="19" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="5" y1="20" x2="5" y2="23" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- E --><line x1="35" y1="16.5" x2="35" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="33" y1="16.5" x2="33" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="33.1" y1="19" x2="33.1" y2="19" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+        </svg>
+      </div>
       <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
@@ -628,7 +654,27 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 <div id="pg-result" class="page">
   <header>
     <div class="logo" onclick="showForm()">
-      <div class="logo-icon">✦</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="19" cy="19" r="19" fill="url(#bgLg)"/>
+          <defs>
+            <linearGradient id="bgLg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4fc3f7"/>
+              <stop offset="100%" stop-color="#f9a825"/>
+            </linearGradient>
+          </defs>
+          <!-- Yin Yang -->
+          <path d="M19 10a9 9 0 0 1 0 18 4.5 4.5 0 0 1 0-9 4.5 4.5 0 0 0 0-9z" fill="#fff" opacity=".9"/>
+          <path d="M19 10a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z" fill="#1a1a2e" opacity=".7"/>
+          <circle cx="19" cy="14.5" r="1.8" fill="#1a1a2e" opacity=".7"/>
+          <circle cx="19" cy="23.5" r="1.8" fill="#fff" opacity=".9"/>
+          <!-- 8 trigram lines (3 per direction, tiny) -->
+          <!-- N --><line x1="16" y1="3" x2="19" y2="3" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="20" y1="3" x2="23" y2="3" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="16.5" y1="5" x2="22.5" y2="5" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- S --><line x1="16.5" y1="33" x2="22.5" y2="33" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="16" y1="35" x2="19" y2="35" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="20" y1="35" x2="23" y2="35" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- W --><line x1="3" y1="16.5" x2="3" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="5" y1="16" x2="5" y2="19" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="5" y1="20" x2="5" y2="23" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- E --><line x1="35" y1="16.5" x2="35" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="33" y1="16.5" x2="33" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="33.1" y1="19" x2="33.1" y2="19" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+        </svg>
+      </div>
       <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
@@ -1002,7 +1048,27 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 <div id="pg-manage" class="page">
   <header>
     <div class="logo" onclick="showForm()">
-      <div class="logo-icon">✦</div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 38 38" width="38" height="38" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="19" cy="19" r="19" fill="url(#bgLg)"/>
+          <defs>
+            <linearGradient id="bgLg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4fc3f7"/>
+              <stop offset="100%" stop-color="#f9a825"/>
+            </linearGradient>
+          </defs>
+          <!-- Yin Yang -->
+          <path d="M19 10a9 9 0 0 1 0 18 4.5 4.5 0 0 1 0-9 4.5 4.5 0 0 0 0-9z" fill="#fff" opacity=".9"/>
+          <path d="M19 10a9 9 0 0 0 0 18 4.5 4.5 0 0 0 0-9 4.5 4.5 0 0 1 0-9z" fill="#1a1a2e" opacity=".7"/>
+          <circle cx="19" cy="14.5" r="1.8" fill="#1a1a2e" opacity=".7"/>
+          <circle cx="19" cy="23.5" r="1.8" fill="#fff" opacity=".9"/>
+          <!-- 8 trigram lines (3 per direction, tiny) -->
+          <!-- N --><line x1="16" y1="3" x2="19" y2="3" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="20" y1="3" x2="23" y2="3" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="16.5" y1="5" x2="22.5" y2="5" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- S --><line x1="16.5" y1="33" x2="22.5" y2="33" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="16" y1="35" x2="19" y2="35" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="20" y1="35" x2="23" y2="35" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- W --><line x1="3" y1="16.5" x2="3" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="5" y1="16" x2="5" y2="19" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="5" y1="20" x2="5" y2="23" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+          <!-- E --><line x1="35" y1="16.5" x2="35" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="33" y1="16.5" x2="33" y2="22.5" stroke="#fff" stroke-width="1.4" opacity=".85"/><line x1="33.1" y1="19" x2="33.1" y2="19" stroke="#fff" stroke-width="1.4" opacity=".85"/>
+        </svg>
+      </div>
       <span class="logo-text">TỬ VI TRƯỜNG NGUYỄN</span>
     </div>
     <nav>
@@ -1092,17 +1158,47 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
 ──────────────────────────────────── */
 (function(){
   const bg=document.getElementById('stars-bg');
+  /* Static twinkling stars */
   for(let i=0;i<160;i++){
     const s=document.createElement('div');s.className='star';
     const sz=(Math.random()*2+0.5).toFixed(1);
     s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*4+2).toFixed(1)}s;--delay:${(Math.random()*4).toFixed(1)}s;--op:${(Math.random()*.7+.3).toFixed(2)}`;
     bg.appendChild(s);
   }
-  for(let i=0;i<6;i++){
-    const s=document.createElement('div');s.className='shoot';
-    s.style.cssText=`top:${Math.random()*60}%;left:${Math.random()*60}%;--sd:${(Math.random()*8).toFixed(1)}s;`;
-    bg.appendChild(s);
+
+  /* Shooting stars — fire a burst every 10 seconds */
+  function fireShootingStars(){
+    const count = 2 + Math.floor(Math.random()*3); // 2–4 stars per burst
+    for(let i=0;i<count;i++){
+      setTimeout(()=>{
+        const s=document.createElement('div');
+        s.className='shoot';
+        const angle = -25 - Math.random()*20; // -25° to -45°
+        const len   = 80 + Math.random()*120;
+        const startX = Math.random()*80;
+        const startY = Math.random()*50;
+        s.style.cssText=`
+          top:${startY}%;left:${startX}%;
+          width:${len}px;height:2px;
+          background:linear-gradient(to right,transparent,rgba(255,255,255,.9),#fff);
+          border-radius:2px;
+          transform-origin:left center;
+          transform:rotate(${angle}deg);
+        `;
+        bg.appendChild(s);
+        // Trigger animation next frame
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          s.classList.add('flying');
+        }));
+        // Remove after animation
+        setTimeout(()=>s.remove(), 2600);
+      }, i * (300 + Math.random()*400));
+    }
   }
+
+  // Fire once on load after a short delay, then every 10 seconds
+  setTimeout(fireShootingStars, 1500);
+  setInterval(fireShootingStars, 10000);
 })();
 
 /* ────────────────────────────────────
@@ -1615,13 +1711,17 @@ function shareFB() {
   document.getElementById('share-popup').classList.remove('open');
 }
 function shareIG() {
+  const url = encodeURIComponent(window.location.href);
+  window.open('https://www.instagram.com/', '_blank');
   copyURL();
-  showToast('📋 Đã copy link! Paste vào bio Instagram để chia sẻ');
+  showToast('📋 Đã mở Instagram & copy link – dán vào bài đăng!');
   document.getElementById('share-popup').classList.remove('open');
 }
 function shareTT() {
+  const url = encodeURIComponent(window.location.href);
+  window.open('https://www.tiktok.com/upload', '_blank');
   copyURL();
-  showToast('📋 Đã copy link! Paste vào TikTok để chia sẻ');
+  showToast('📋 Đã mở TikTok & copy link – dán vào video!');
   document.getElementById('share-popup').classList.remove('open');
 }
 function copyURL() {
