@@ -13,12 +13,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#060b1e;color:#e0e0e0;mi
 #stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--d,3s) var(--delay,0s) infinite;}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:var(--op,.9)}}
-.shoot{position:absolute;pointer-events:none;opacity:0;}
-.shoot.flying{animation:shoot 2.4s linear forwards;}
+.shoot{position:absolute;pointer-events:none;opacity:0;transform-origin:left center;}
+.shoot.flying{animation:shoot var(--dur,2.2s) linear forwards;}
 @keyframes shoot{
-  0%  {opacity:1;transform:translate(0,0) scaleX(1);}
-  80% {opacity:.6;}
-  100%{opacity:0;transform:translate(360px,180px) scaleX(1);}
+  0%  {opacity:1;  transform:rotate(var(--rot,40deg)) translate(0,0);}
+  85% {opacity:.5;}
+  100%{opacity:0;  transform:rotate(var(--rot,40deg)) translate(var(--dist,500px),0);}
 }
 
 /* Header */
@@ -1166,37 +1166,49 @@ body.cal-dl .al-namDL-note{color:#4a7a30;}
     bg.appendChild(s);
   }
 
-  /* Shooting stars — fire a burst every 10 seconds */
+  /* Shooting stars — burst từ góc trên, bay chéo xuống, mỗi 10 giây */
   function fireShootingStars(){
-    const count = 2 + Math.floor(Math.random()*3); // 2–4 stars per burst
+    const count = 2 + Math.floor(Math.random()*3); // 2–4 sao mỗi đợt
     for(let i=0;i<count;i++){
       setTimeout(()=>{
-        const s=document.createElement('div');
-        s.className='shoot';
-        const angle = -25 - Math.random()*20; // -25° to -45°
-        const len   = 80 + Math.random()*120;
-        const startX = Math.random()*80;
-        const startY = Math.random()*50;
-        s.style.cssText=`
-          top:${startY}%;left:${startX}%;
-          width:${len}px;height:2px;
-          background:linear-gradient(to right,transparent,rgba(255,255,255,.9),#fff);
+        const s   = document.createElement('div');
+        s.className = 'shoot';
+
+        // Xuất phát từ vùng trên màn hình (top 0–18%, toàn bộ chiều ngang)
+        const startX = 5  + Math.random() * 75;  // 5% – 80% từ trái
+        const startY = 0  + Math.random() * 18;  // 0% – 18% từ trên
+
+        // Góc bay: 35°–50° (chéo xuống phải)
+        const rot  = 35 + Math.random() * 15;
+
+        // Độ dài đuôi sao và khoảng cách bay
+        const len  = 100 + Math.random() * 140;  // 100–240 px
+        const dist = 380 + Math.random() * 220;  // 380–600 px
+        const dur  = (1.8 + Math.random() * 0.8).toFixed(2); // 1.8–2.6 s
+
+        s.style.cssText = `
+          top:${startY}%; left:${startX}%;
+          width:${len}px; height:2px;
+          background:linear-gradient(to right, transparent, rgba(255,255,255,.7) 40%, #fff);
           border-radius:2px;
-          transform-origin:left center;
-          transform:rotate(${angle}deg);
+          --rot:${rot}deg;
+          --dist:${dist}px;
+          --dur:${dur}s;
         `;
         bg.appendChild(s);
-        // Trigger animation next frame
+
+        // Trigger animation 2 frames sau để tránh flash
         requestAnimationFrame(()=>requestAnimationFrame(()=>{
           s.classList.add('flying');
         }));
-        // Remove after animation
-        setTimeout(()=>s.remove(), 2600);
-      }, i * (300 + Math.random()*400));
+
+        // Xoá sau khi bay xong
+        setTimeout(()=>s.remove(), (parseFloat(dur)+0.3)*1000);
+      }, i * (200 + Math.random()*500));
     }
   }
 
-  // Fire once on load after a short delay, then every 10 seconds
+  // Lần đầu sau 1.5 s, sau đó mỗi 10 giây
   setTimeout(fireShootingStars, 1500);
   setInterval(fireShootingStars, 10000);
 })();
